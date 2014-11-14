@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Support, Create 2 Circles"/>
+	<quickinfo><![CDATA[#
+#  R for Mayday, maintenance
+#
+#  Create a dataset with two circles
+#
+#  showing how to create a new DataSet
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="n" default="400" description="number of points per circle"/>
+		<param name="radius.innercircle" default="1" description="mean of inner circles radius"/>
+		<param name="radius.outercircle" default="2" description="mean of outer circles radius"/>
+		<param name="sd" default="0.1" description="standard deviation for the random computation of the radii"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

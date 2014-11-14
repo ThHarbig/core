@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="k-Means {mva}"/>
+	<quickinfo><![CDATA[# 
+#  kmeans, from the package mva
+#
+#  Example for "R for Mayday"
+#  
+#  Apply the k-means algorithm to the expression matrix.
+#  
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="k" default="10" description="number of clusters"/>
+		<param name="iterations" default="100" description="max number of iterations"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

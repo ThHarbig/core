@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="GCRMA-Normalization"/>
+	<quickinfo><![CDATA[#  
+#  GCRMA-Normalization 'R for Mayday'.
+#  
+# annotation.name='GCRMA-Normalized Data'
+# ---
+#  Anna Jasper, 2007-03-28
+#  Anna.ivic@gmail.com
+#
+# -------------------------------------------------------------------
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="files" default=".cel" description="filelist">
+		   <type name="filenames"/>
+		</param>
+		<param name=" Compress"/>
+		<param name=" CelfilePath"/>
+		<param name=" SampleNames"/>
+		<param name=" PhenoData"/>
+		<param name=" Description"/>
+		<param name=" Notes"/>
+		<param name=" Normalize"/>
+		<param name=" Bgversion"/>
+		<param name=" Type"/>
+		<param name=" K"/>
+		<param name=" Stretch"/>
+		<param name=" Correction"/>
+		<param name=" Rho"/>
+		<param name=" OpticalCorrect"/>
+		<param name=" Verbose"/>
+		<param name=" Fast"/>
+		<param name=" Minimum"/>
+		<param name=" OptimizeBy"/>
+		<param name=" Cdfname"/>
+	</paramlist>
+</RSourceDescription>

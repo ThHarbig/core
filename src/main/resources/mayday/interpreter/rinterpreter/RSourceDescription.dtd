@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!ELEMENT RSourceDescription (functionname, quickinfo, paramlist, requires?)>
+
+  <!ELEMENT functionname EMPTY>
+    <!ATTLIST functionname id (CDATA) #REQUIRED>
+    <!ATTLIST functionname descriptor (CDATA) #IMPLIED>
+
+  <!ELEMENT quickinfo (#PCDATA)>
+
+  <!ELEMENT paramlist (param*)>
+     <!ELEMENT param (type?)>
+		<!ATTLIST param name (CDATA) #REQUIRED>
+		<!ATTLIST param default (CDATA) #IMPLIED>
+		<!ATTLIST param description (CDATA) #IMPLIED>
+		
+		<!ELEMENT type (entry*)>
+		   <!ATTLIST type name (CDATA) #IMPLIED>
+		   <!ATTLIST type noedit (CDATA) #IMPLIED>
+		   <!ELEMENT entry EMPTY>
+		      <!ATTLIST entry value (CDATA) #REQUIRED>
+		      
+  <!--  The following tag is used to indicate which MIOGroups should
+     %  be selected to fulfill the R functions requirements
+     %  properly.
+     %  The mioclass attribute is required. Only MIOGroups
+     %  containing such values are interesting.
+     %  The description attribute is needed to inform the
+     %  user about the purpose of the MIOGroup. Thus it is not a
+     %  strict requirement to fulfill the exact description
+     %  of the corresponding MIOGroup.
+     %
+     %  The order is important!
+    -->	      
+  <!ELEMENT requires (mio*)>
+    <!ELEMENT mio EMPTY>
+      <!ATTLIST mio id (CDATA) #REQUIRED>
+      <!ATTLIST mio classname (CDATA) #REQUIRED>
+      <!ATTLIST mio dir (CDATA) #IMPLIED>
+
+    
+      
+    

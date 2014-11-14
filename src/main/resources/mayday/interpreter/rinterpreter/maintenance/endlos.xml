@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="endlos" descriptor="Support, Endlosschleife"/>
+	<quickinfo><![CDATA[#  
+#  R for Mayday, maintenance
+#
+#  This function goes on and on and ...
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

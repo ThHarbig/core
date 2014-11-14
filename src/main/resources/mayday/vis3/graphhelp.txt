@@ -1,0 +1,75 @@
+    __  ___                 __                
+   /  |/  /____ ___  ______/ /____ ___  __    
+  / /|_/ // __ `/ / / / __  // __ `/ / / /    
+ / /  / // /_/ / /_/ / /_/ // /_/ / /_/ /     
+/_/  /_/ \__,_/\__, /\__,_/ \__,_/\__, /      
+              /____/             /____/       
+
+   ______                  __       _    ___                        
+  / ____/_________ _____  / /_     | |  / (_)___ _      _____  _____
+ / / __ / ___/ __ `/ __ \/ __ \    | | / / // _ \ | /| / / _ \/ ___/
+/ /_/ // /  / /_/ / /_/ / / / /    | |/ / //  __/ |/ |/ /  __/ /    
+\____//_/   \__,_/ .___/_/ /_/     |___/_/ \___/|__/|__/\___/_/     
+                /_/                                                 
+
+
+Key Shortcuts
+
+F1	This Screen
+F2	Make all nodes fixed 
+F3	Open component Inspector
+F4	Show/Hide Title
+F5	Reset View
+F6	Fit Graph to width of the frame
+F7	Fit Graph to the frame
+F8	Reset size of all components
+
+ESC	clear selection
+DEL	Hide selected nodes
+
+SPACE	Toggle Renderers: Default -> Circle -> Heatmap -> Gradient -> Only SBGN -> Default
+
+0	Reset Zoom
+Home, Pg Up, Pg Down, End	Goto top, previous screen, next screen, bottom ,
+
+CTRL+a	Select all nodes
+
+CTRL+g	Group selected nodes
+
+
+Zoom
+-------------------------------------------------------------------
+To zoom the entire graph, use MouseWheel + CTRL or select the zoom factor from the context menu -> Zoom
+
+Nodes can be resized using the mouse wheel:
+
+MouseWheel: Scale,	scale, keep aspect ratio
+MouseWheel + CTRL	scale horizontally
+MouseWheel + SHIFT	scale vertically
+
+Selection
+-------------------------------------------------------------------
+To select a node, click on it, to select many, drag a rectangle around the nodes.
+
+
+The Component Inspector
+-------------------------------------------------------------------
+The component inspector contains two lists, one of all the nodes, and one of 
+all the edges in the graph. Each of the lists can be searched, also using 
+regular expressions. 
+
+Adding New Nodes
+-------------------------------------------------------------------
+Press CTRL+N to open the Add Nodes... Dialog. 
+
+
+Connecting Nodes
+-------------------------------------------------------------------
+
+To connect nodes, left-click on the source node and press CTRL. 
+Then drag the mouse to the target node, until the arrow shows
+the label of the target node. Then, release the mouse button. 
+
+
+
+

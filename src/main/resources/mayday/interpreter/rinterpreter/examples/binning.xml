@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Binning"/>
+	<quickinfo><![CDATA[#
+# bins the expression matrix
+#
+# transform.method (transform data BEFORE binning):
+#          - none    
+#          - log (log transformation)
+#          - sqrt
+#
+# binning.method: 
+#          - scale (simply scales the intensities to the
+#              range min-max.)
+#          - rank  (same as scale, but uses the rank of
+#              the intensities instead of intensities
+#              directly)
+#
+# rounding.method:
+#          - ceiling (returns the smallest integer not 
+#               less than the float value)
+#          - floor   (returns the largest integer not 
+#               greater than the float value)
+#          - round   (rounds the value.  Note that for 
+#               rounding off a 5, the IEEE standard is 
+#               used, "_go to the even digit_")
+#
+# min:    - n  (the smallest allowed binned value)
+#
+# max:    - n  (the greatest allowed binned value)
+#
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="transform.method" default="&quot;none&quot;"/>
+		<param name="binning.method" default="&quot;scale&quot;"/>
+		<param name="rounding.method" default="&quot;round&quot;"/>
+		<param name="min" default="0"/>
+		<param name="max" default="3"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

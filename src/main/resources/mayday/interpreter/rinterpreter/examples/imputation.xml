@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Impute"/>
+	<quickinfo><![CDATA[#  
+#  Imputation. (k-nearest neighbor)
+#  
+#  Guess missing values with the function
+#  impute.knn() from the package {impute}
+#
+#  Requires package {impute}!
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="k" default="10"/>
+		<param name="rowmax" default="0.5"/>
+		<param name="colmax" default="0.8"/>
+		<param name="maxp" default="1500"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

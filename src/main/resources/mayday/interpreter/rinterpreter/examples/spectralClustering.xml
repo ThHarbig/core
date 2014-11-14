@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Spectral Clustering"/>
+	<quickinfo><![CDATA[#
+#  Spectral Clustering
+#
+#  Example for "R for Mayday"
+#
+#  Spectral clustering:
+#  Ref: A. Y. Ng, M. I. Jordan, Yair Weiss. 
+#       On Spectral Clustering: Analysis and an algorithm. 
+#       In NIPS 14. 2002
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="k" default="2" description="number of clusters"/>
+		<param name="sigma" default="0.1" description="scaling factor"/>
+		<param name="kmeans.iter.max" default="10" description="number of max. kmeans-iterations"/>
+		<param name="plot.Y" default="TRUE" description="indicating whether to plot the Y-matrix">
+			<type name="strictboolean" noedit="false"/>
+		</param>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

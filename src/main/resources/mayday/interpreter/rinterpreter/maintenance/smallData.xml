@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Support, Create a Small Data Set"/>
+	<quickinfo><![CDATA[#
+# R for Mayday, maintenance
+#
+#   create a small dataset with 
+#     n probes 
+#     m experiments 
+#   
+#   the output contains two mios:
+#     mean
+#     variance
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="n" default="20" description="number of probes">
+			<type name="default" noedit="false"/>
+		</param>
+		<param name="m" default="5" description="number of experiments">
+			<type name="default" noedit="false"/>
+		</param>
+	</paramlist>
+	<requires>
+		<mio id="" classname="mayday.core.mi.DoubleMIO" direction="OUT"/>
+		<mio id="" classname="mayday.core.mi.DoubleMIO" direction="OUT"/>
+	</requires>
+</RSourceDescription>

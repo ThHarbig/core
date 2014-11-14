@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Simple k-means"/>
+	<quickinfo><![CDATA[#
+#  Simple k-means algorithm (see pckg. {mva})
+#
+#  "R for Mayday" example showing how to return 
+#  only probe lists 
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="k" default="10" description="number of clusters to produce"/>
+		<param name="iter.max" default="10" description="max. number of iterations"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

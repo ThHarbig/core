@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!ELEMENT probelist (annotation, layout, probe*)>
+
+  <!ELEMENT annotation (name, quickinfo, info)>
+
+    <!ELEMENT name (#PCDATA)>
+    <!ELEMENT quickinfo (#PCDATA)>
+    <!ELEMENT info (#PCDATA)>
+    
+  <!ELEMENT layout (color)>
+  
+    <!ELEMENT color (#PCDATA)>
+
+  <!ELEMENT probe (#PCDATA)>

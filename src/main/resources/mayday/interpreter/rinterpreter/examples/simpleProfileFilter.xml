@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Above-Below-Zero Filter"/>
+	<quickinfo><![CDATA[#
+#  simple filtering example
+#
+#  creates 3 partitions of the explicit probes contained
+#  in the master table
+#  the partitions contain the probes where the expression
+#  values are:
+#    above zero
+#    below zero
+#    above and below zero
+#
+#
+#  see SimpleProfileFilter plugin
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

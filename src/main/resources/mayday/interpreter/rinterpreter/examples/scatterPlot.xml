@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Scatter-Plots (2D/3D)"/>
+	<quickinfo><![CDATA[#
+#  Scatterplot of the probes contained in the given 
+#  probelists
+#
+#  Plots 2 or 3 experiments of all explicit probes, the
+#  experiments can be given either as integers or
+#  as experiment identifiers
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="exp1" default="1" description="first experiment (to appear on X-axis)"/>
+		<param name="exp2" default="2" description="second experiment (to appear on Y-axis)"/>
+		<param name="exp3" default="NULL" description="third experiment (to appear on Z-axis; pckg. scatterPlot3d must be installed)"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

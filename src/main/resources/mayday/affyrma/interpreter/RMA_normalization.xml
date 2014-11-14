@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="RMA-Normalization"/>
+	<quickinfo><![CDATA[#  
+#  RMA-Normalization 'R for Mayday'.
+#  
+# annotation.name='RMA-Normalized Data'
+# ---
+#  Anna Jasper, 2007-03-28
+#  Anna.ivic@gmail.com
+#
+# -------------------------------------------------------------------
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="files" default=".cel" description="filelist">
+		   <type name="filenames"/>
+		</param>
+		<param name=" CelfilePath"/>
+		<param name=" SampleNames"/>
+		<param name=" PhenoData"/>
+		<param name=" Description"/>
+		<param name=" Notes"/>
+		<param name=" rmMask"/>
+		<param name=" rmOutliers"/>
+		<param name=" rmExtra"/>
+		<param name=" Hdf5"/>
+		<param name=" Hdf5FilePath"/>
+		<param name=" Verbose"/>
+		<param name=" Normalize"/>
+		<param name=" Background"/>
+		<param name=" BGversion"/>
+		<param name=" Destructive"/>
+		<param name=" CDFname"/>
+	</paramlist>
+</RSourceDescription>

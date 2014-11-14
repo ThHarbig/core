@@ -1,0 +1,27 @@
+R for Mayday - R code
+======================
+
+In this folder there are all files neseccary to create 
+the RForMayday package.
+
+1.) Changes
+
+  To change R code in the RForMayday package, use 
+    ./package/RForMayday.R
+
+  To change the DESCRIPTION file, use
+    ./package/DESCRIPTION
+  
+  To change the manual for any R function, use
+    ./man/*.Rd
+
+2.) Build/Install
+  
+	Use the ant script build.xml (target="RBuild")!
+	
+--
+2005-05-31, Matthias Zschunke
+zschunke@informatik.uni-tuebingen.de
+
+
+       
