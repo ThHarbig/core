@@ -24,7 +24,6 @@ package wsi.ra.chart2d;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -425,8 +424,9 @@ public class ScaledBorder implements Border
 	}
 
 	private void drawXValues( Graphics g, Insets insets, Dimension cd ){
+		Graphics2D g2 = (Graphics2D)g;
 		if( under_construction ) System.out.println("ScaledBorder.drawXValues()");
-		Font old = null, f = null;
+		//Font old = null, f = null;
 		FontMetrics fm = g.getFontMetrics();
 		double mx = cd.width / src_rect.width;
 		int n, labelX,
@@ -443,11 +443,12 @@ public class ScaledBorder implements Border
 			String text = format_x.format(v);
 			if(x_labeling != null)
 			{
-				AffineTransform T = new AffineTransform(0, -1, 1, 0, 0, 0);
-				old = g.getFont();
-				f = old.deriveFont( T );
-				g.setFont(f);
-
+				//GJ: removed -> see below!
+				//AffineTransform T = new AffineTransform(0, -1, 1, 0, 0, 0);
+				//old = g.getFont();
+				//f = old.deriveFont( T );
+				//g.setFont(f);
+				
 				//avoid round errors for double values
 				v = Math.round(v * 1000000.) / 1000000.;
 				
@@ -456,8 +457,13 @@ public class ScaledBorder implements Border
 					text = x_labeling.get(v);
 					int strW = fm.stringWidth( text );
 					int ypos = xLineY + strW + fontAsc;
+					//GJ (20.11.2014): since rotating the font did not work on mac, we now rotate the canvas
+					AffineTransform aff = AffineTransform.getRotateInstance(Math.toRadians(-90.0), labelX + 4, ypos);
+					AffineTransform oldAff = g2.getTransform();
+					g2.setTransform(aff);
 					g.drawString(text, labelX + 4, ypos);
-					g.setFont(old);
+					g2.setTransform(oldAff);
+					//g.setFont(old);
 					g.drawLine( labelX, xLineY, labelX, xLineY + marker_length );
 				}
 			}
