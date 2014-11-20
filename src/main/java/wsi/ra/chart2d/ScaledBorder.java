@@ -335,11 +335,18 @@ public class ScaledBorder implements Border
 
 		if( y_label != null ) {
 			Dimension yld = new Dimension(fm.getAscent()+fm.getDescent(), fm.stringWidth(y_label));
-			AffineTransform T = new AffineTransform(0, -1, 1, 0, 0, 0);
-			Font old = g.getFont(), f = old.deriveFont( T );
-			g.setFont( f );
-			g.drawString( y_label, y_label2border + fm.getAscent(), inner_insets.top + ( cd.height + yld.height )/ 2 );
-			g.setFont( old );
+			
+			//GJ (20.11.2014): since rotating the font did not work on mac, we now rotate the canvas
+			Graphics2D g2 = (Graphics2D)g;
+			AffineTransform aff = AffineTransform.getRotateInstance(Math.toRadians(-90.0), y_label2border + fm.getAscent(), inner_insets.top + ( cd.height + yld.height )/ 2);
+			AffineTransform oldAff = g2.getTransform();
+//			AffineTransform T = new AffineTransform(0, -1, 1, 0, 0, 0);
+//			Font old = g.getFont(), f = old.deriveFont( T );
+//			g.setFont( f );
+			g2.setTransform(aff);
+			g2.drawString( y_label, y_label2border + fm.getAscent(), inner_insets.top + ( cd.height + yld.height )/ 2 );
+			g2.setTransform(oldAff);
+//			g.setFont( old );
 		}
 
 		if( x_label != null )
