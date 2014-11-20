@@ -142,6 +142,7 @@ public class PluginManager {
 		// 1 - Scan local plugin dir for all present files, extend classpath, scan jars
 		if (/*MaydayDefaults.isWebstartApplication() || */
 		//GJ (20.11.2014): due to the new security updates in Java 8 adding local source code during start up is no longer permitted!
+		//TODO automatically scan afterwards?!
 				!pluginRoot.startsWith(coreRoot))				
 			FilesystemScanner.getInstance().scan(this, new File(pluginRoot));
 
