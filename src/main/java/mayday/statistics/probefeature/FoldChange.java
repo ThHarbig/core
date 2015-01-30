@@ -19,11 +19,7 @@ import mayday.core.settings.generic.HierarchicalSetting;
 import mayday.core.settings.typed.BooleanSetting;
 import mayday.core.settings.typed.ClassSelectionSetting;
 
-
-public class FoldChange
-extends AbstractProbeFeaturePlugin
-implements ProbelistPlugin
-{
+public class FoldChange extends AbstractProbeFeaturePlugin implements ProbelistPlugin {
 
 	public PluginInfo register() throws PluginManagerException {
 		PluginInfo pli= new PluginInfo(
@@ -65,15 +61,31 @@ implements ProbelistPlugin
 		boolean rpNA = replaceNAN.getBooleanValue();
 		boolean logFC = calcLog.getBooleanValue();
 		
-		MIGroup mioGroup = masterTable.getDataSet().getMIManager().newGroup("PAS.MIO.Double", 
-				"FC between "+csm.getClassNames().get(0)+" and "+csm.getClassNames().get(1),"/Probe Statistic/"
-		);
+		String prefix = "";
+		String nameDivider = " | ";
+		/*
+		 * GJ:
+		 * added a more clarified naming of the MIO-group
+		 */
+		if(logFC && !log) {
+			prefix="log2";
+		}
+		
+		if(log) {
+			nameDivider=" - ";
+		}
+		
+		String name = "FC calculated as "+prefix+"("+csm.getClassNames().get(0)+nameDivider+csm.getClassNames().get(1)+")";
+		MIGroup mioGroup = masterTable.getDataSet().getMIManager().newGroup("PAS.MIO.Double", name, "/Probe Statistic/");
 
 		List<Integer> c1 = csm.toIndexList(0);
 		List<Integer> c2 = csm.toIndexList(1);
 		double l1 = c1.size();
 		double l2 = c2.size();
-		
+		/*
+		 * GJ:
+		 * changed the FC calculation to A-B, where B is the last selected class in the class selection dialog
+		 */
 		for (Probe pb : uniqueProbes.getAllProbes()) {
 			double[] vals = pb.getValues();
 			double m1=0, m2=0;
@@ -87,14 +99,14 @@ implements ProbelistPlugin
 			double fc = 0.;
 			
 			if(log) {
-				fc = (m2 - m1);
+				fc = (m1 - m2);
 			} else {
 				if(logFC) {
 					double m1l = Math.log(m1)/Math.log(2);
 					double m2l = Math.log(m2)/Math.log(2);
-					fc = (m2l - m1l);
+					fc = (m1l - m2l);
 				} else {
-					fc = m2 / m1;
+					fc = m1 / m2;
 				}
 			}
 			
@@ -115,6 +127,4 @@ implements ProbelistPlugin
 	@Override
 	public void init() {	
 	}
-	
-
 }
