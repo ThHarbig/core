@@ -24,6 +24,7 @@ package wsi.ra.chart2d;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -337,15 +338,15 @@ public class ScaledBorder implements Border
 			
 			//GJ (20.11.2014): since rotating the font did not work on mac, we now rotate the canvas
 			Graphics2D g2 = (Graphics2D)g;
-			AffineTransform aff = AffineTransform.getRotateInstance(Math.toRadians(-90.0), y_label2border + fm.getAscent(), inner_insets.top + ( cd.height + yld.height )/ 2);
-			AffineTransform oldAff = g2.getTransform();
-//			AffineTransform T = new AffineTransform(0, -1, 1, 0, 0, 0);
-//			Font old = g.getFont(), f = old.deriveFont( T );
-//			g.setFont( f );
-			g2.setTransform(aff);
+			//AffineTransform aff = AffineTransform.getRotateInstance(Math.toRadians(-90.0), y_label2border + fm.getAscent(), inner_insets.top + ( cd.height + yld.height )/ 2);
+			//AffineTransform oldAff = g2.getTransform();
+			AffineTransform T = new AffineTransform(0, -1, 1, 0, 0, 0);
+			Font old = g.getFont(), f = old.deriveFont( T );
+			g.setFont( f );
+			//g2.setTransform(aff);
 			g2.drawString( y_label, y_label2border + fm.getAscent(), inner_insets.top + ( cd.height + yld.height )/ 2 );
-			g2.setTransform(oldAff);
-//			g.setFont( old );
+			//g2.setTransform(oldAff);
+			g.setFont( old );
 		}
 
 		if( x_label != null )
@@ -426,8 +427,8 @@ public class ScaledBorder implements Border
 	private void drawXValues( Graphics g, Insets insets, Dimension cd ){
 		Graphics2D g2 = (Graphics2D)g;
 		if( under_construction ) System.out.println("ScaledBorder.drawXValues()");
-		//Font old = null, f = null;
-		FontMetrics fm = g.getFontMetrics();
+		Font old = null, f = null;
+		FontMetrics fm = g2.getFontMetrics();
 		double mx = cd.width / src_rect.width;
 		int n, labelX,
 		xnull = insets.left + (int)( - src_rect.x * mx );
@@ -444,10 +445,10 @@ public class ScaledBorder implements Border
 			if(x_labeling != null)
 			{
 				//GJ: removed -> see below!
-				//AffineTransform T = new AffineTransform(0, -1, 1, 0, 0, 0);
-				//old = g.getFont();
-				//f = old.deriveFont( T );
-				//g.setFont(f);
+				AffineTransform T = new AffineTransform(0, -1, 1, 0, 0, 0);
+				old = g2.getFont();
+				f = old.deriveFont( T );
+				g2.setFont(f);
 				
 				//avoid round errors for double values
 				v = Math.round(v * 1000000.) / 1000000.;
@@ -456,15 +457,17 @@ public class ScaledBorder implements Border
 				{
 					text = x_labeling.get(v);
 					int strW = fm.stringWidth( text );
+					int strH = fm.getMaxAscent();
 					int ypos = xLineY + strW + fontAsc;
 					//GJ (20.11.2014): since rotating the font did not work on mac, we now rotate the canvas
-					AffineTransform aff = AffineTransform.getRotateInstance(Math.toRadians(-90.0), labelX + 4, ypos);
-					AffineTransform oldAff = g2.getTransform();
-					g2.setTransform(aff);
-					g.drawString(text, labelX + 4, ypos);
-					g2.setTransform(oldAff);
-					//g.setFont(old);
-					g.drawLine( labelX, xLineY, labelX, xLineY + marker_length );
+					//AffineTransform aff = AffineTransform.getQuadrantRotateInstance(1);
+					//AffineTransform oldAff = g2.getTransform();
+					//g2.setTransform(aff);
+					
+					g2.drawString(text, labelX+strH/2, ypos);
+					//g2.setTransform(oldAff);
+					g2.setFont(old);
+					g2.drawLine( labelX, xLineY, labelX, xLineY + marker_length );
 				}
 			}
 			else if(v >= min_x_draw && v <= max_x_draw)
@@ -472,8 +475,8 @@ public class ScaledBorder implements Border
 				try{ v = format_x.parse(text).doubleValue(); }
 				catch( java.text.ParseException ex ){ }
 				int strW = fm.stringWidth( text );
-				g.drawString( text, labelX - strW / 2, xLineY + fontAsc );
-				g.drawLine( labelX, xLineY, labelX, xLineY + marker_length );
+				g2.drawString( text, labelX - strW / 2, xLineY + fontAsc );
+				g2.drawLine( labelX, xLineY, labelX, xLineY + marker_length );
 			}
 			n++;
 			labelX = xnull + (int)( n * src_dX * mx);
