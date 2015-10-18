@@ -231,7 +231,7 @@ public class PluginManager {
 		return null;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void registerPlugins() {
 		message0("-----------------------------------------------------");
 		message("Checking "+plugin_candidates.size() + " classes...");
@@ -601,6 +601,7 @@ public class PluginManager {
 			// it will be reconstructed with the changed value of java.library.path
 			field.set(clazz, null);
 			System.setProperty("java.library.path", newLibPath);
+			message("New Java Library Path: " + System.getProperty("java.library.path"));
 			
 			field.setAccessible(accessible);
 			
