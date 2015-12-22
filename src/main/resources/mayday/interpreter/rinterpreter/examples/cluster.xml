@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="PAM"/>
+	<quickinfo><![CDATA[#  
+#  PAM (Partitioning Around Medoids)
+#
+#  Cluster microarray data using different
+#  dissimilarity measures.
+#
+#  This application makes use of the 'pam'
+#  function from the 'cluster' package.
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="k" default="2" description="number of clusters"/>
+		<param name="metric" default="&quot;euclidean&quot;" description="metric to be used">
+			<type name="selection">
+				<entry value="&quot;euclidean&quot;"/>
+				<entry value="&quot;manhattan&quot;"/>
+			</type>
+		</param>
+		<param name="p" default="2" description="if metric is &quot;minkowsky&quot; the p-th root is used"/>
+		<param name="plot" default="TRUE" description="plot the silhouettes?">
+			<type name="strictboolean" noedit="false"/>
+		</param>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

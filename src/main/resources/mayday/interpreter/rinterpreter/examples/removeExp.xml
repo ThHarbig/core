@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Remove Columns"/>
+	<quickinfo><![CDATA[#  
+#  Remove columns from the expression matrix.
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="v"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

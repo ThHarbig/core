@@ -1,0 +1,4 @@
+Permissions: all-permissions
+Codebase: JARCODEBASE
+Caller-Allowable-Codebase: JARCODEBASE
+Trusted-Library: true

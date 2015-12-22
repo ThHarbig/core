@@ -1,0 +1,220 @@
+% Nils Gehlenborg (neil@mangojelly.org)
+% Janko Dietzsch (dietzsch@informatik.uni-tuebingen.de)
+
+%*** load required packages *********************************************
+
+\documentclass[11pt,fleqn,a4paper]{article}
+\usepackage{flafter}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{mathpazo}  % mathptmx, mathpazo, helvet, newcent, bookman, avant
+\usepackage{fancyhdr}
+
+
+\newcommand{\may}{Mayday}
+\newcommand{\mpfURL}{\texttt{www.zbit.uni-tuebingen.de/pas/mayday/download/download.html}}
+
+\usepackage{CustomDefinitions}
+
+%*** check for pdflatex *********************************************
+
+%\newif \ifpdf
+%\ifx \pdfoutput \undefined
+%  \pdffalse    % we are not running PDFLaTeX
+%\else
+%  \pdfoutput=1 % we are running PDFLaTeX
+%  \pdftrue
+%\fi
+
+%*** setup page *****************************************************
+
+\setlength{\textwidth}{14cm}
+\setlength{\textheight}{23cm}
+\setlength{\oddsidemargin}{1cm}
+\setlength{\headsep}{1.2cm}
+\setlength{\tabcolsep}{0.1cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0ex}
+\addtolength{\topmargin}{-1.5cm}
+
+%*** new commands ***************************************************
+
+\renewcommand{\baselinestretch}{1.1}
+\renewcommand{\headrule}{} % don't draw a line underneath the header
+\renewcommand{\ttdefault}{pcr} % set fixed-width font to Adobe Courier
+\renewcommand{\sfdefault}{phv} % set sans-serif font to Helvetica
+\renewcommand{\figurename}{\footnotesize{Figure}}
+\renewcommand{\tablename}{\footnotesize{Table}}
+
+\newcommand{\code}[1]{\textnormal{\texttt{#1}}}
+
+
+\newcommand{\documenttitle}{How to setup and use the\\ \may{} Processing Framework (MPF)}
+\newcommand{\documenttitleB}{How to setup and use the \may{} Processing Framework (MPF)}
+\newcommand{\seriestitle}{Mayday How-To Series}
+\newcommand{\pluginauthors}{Florian Battke}
+\newcommand{\authorname}{Florian Battke}
+\newcommand{\authoremail}{battke@informatik.uni-tuebingen.de}
+
+
+%%% including graphics %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% use: \Figure[!h]{example.jpg}{Unterschrift}{0.5}
+\newcommand{\Figure}[4][optional,]{
+  \begin{figure}[#1]
+    \begin{center}
+      \resizebox*{!}{#4\height}{\includegraphics{#2}}
+      \caption{#3 \label{#2}}
+    \end{center}
+  \end{figure}
+}
+
+\newcommand{\Grafik}[2]{
+  \resizebox*{!}{#2\height}{\includegraphics{#1}}
+}
+
+% use: \FigureMulti[!h]{\Grafik{1.jpg}{0.5} \Graphic{2.jpg}{0.4} ...}{Unterschrift}
+\newcommand{\FigureMulti}[3][{!h},]{
+  \begin{figure}[#1]
+    \begin{center}
+      #2
+      \caption{#3}
+    \end{center}
+  \end{figure}
+}
+
+
+
+%*** header definition **********************************************
+
+\pagestyle{fancy}
+\setlength{\headheight}{25pt}
+% \lhead{\includegraphics{mayday_mono.png}$\quad$\textsf{\footnotesize{\seriestitle}}}
+\chead{}
+\rhead{\footnotesize{\emph{\documenttitleB}}}
+
+\lfoot{\textsf{\tiny{\today}}}
+\cfoot{}
+\rfoot{\thepage}
+
+%*** document begins here *******************************************
+
+\begin{document}
+  \vspace{20pt}
+
+  \rule[10pt]{\textwidth}{.7pt}
+  {\bfseries{
+  \LARGE{
+  \documenttitle
+  }}}
+  \vspace{5pt}\\
+  \pluginauthors \\
+  \rule[-0pt]{\textwidth}{.7pt}
+
+  \sloppy
+
+
+\section*{Preparations}
+\subsection*{Essential prerequisites}
+
+The \may{} Processing Framework (MPF) requires no external libraries. If you want to embed R functions into processing pipelines, make sure to install the \may{} R Interpreter and its dependencies first.
+
+\subsection*{Installing the MPF}
+
+To install the MPF, simply download the plugin from \mpfURL{} and move the file into your \may{} plugin directory. Now start respectively restart \may. The MPF will then finish the installation and ask you to restart \may{} again.
+%The MPF will finish the installation and ask you to restart \may.
+
+\section*{Using the MPF}
+
+You can use the MPF in two distinct ways: You can apply existing processing modules to your data \emph{or} create new processing modules (pipelines).
+
+\subsection*{Applying processing modules}
+
+\subsubsection*{Starting the MPF}
+
+After selecting one or more probe lists as input, invoke the MPF plugin by right-clicking on one of the selected probe lists, open the ``Data Processing'' submenu and click on ``Mayday Processing Framework''. This will open the MPF Applicator window.
+
+\subsubsection*{Selecting a module}
+
+\Figure[!ht]{step1.eps}{ MPF Applicator, Step 1 - Module selection dialog}{0.5}
+
+Here you can select a processing module and read the module description (see figure \ref{step1.eps}). You can also check data regarding the processing job you are about to create: You can see how many probe lists you selected and how many probe lists are expected by the respective processing module. These two numbers are used to determine whether enough input probe lists have been selected and whether the module will be run only once or in batch mode. Click ``Next'' to proceed.
+
+\subsubsection*{Assigning input slots}
+
+If the selected module expects more than one probe lists as its input, the next screen will show the input assignment dialog. You can now specify how the input probe lists are assigned to the module's input slots. Depending on the module, this can have a profound impact on your results! Click ``Next'' to proceed.
+
+\subsubsection*{Module options}
+
+\Figure[!ht]{step3.eps}{ MPF Applicator, Step 3 - Module option dialog}{0.5}
+
+
+The final step is setting module options (see figure \ref{step3.eps}). The MPF Applicator will present a dialog where you can modify the module's default options. Modules should offer explanatory texts for every one of their options to guide your decisions. As soon as you're satisfied with all options, you can start the processing job.
+
+\bigskip
+If at any time you want to change your settings, simply use the ``Back'' button to review all options.
+
+\subsubsection*{Cancelling execution}
+
+You can always cancel a running processing job by clicking on the ``Cancel'' button. Depending on the modules used, it may take some time before the job responds to the cancel request. This delay is mostly due to memory cleanup, so please be patient.
+
+\subsubsection*{Log messages}
+
+\Figure[!ht]{step4.eps}{ MPF Applicator, Reviewing log messages}{0.5}
+
+When your processing job is finished, you should take a few moments to review the messages in the log (see figure \ref{step4.eps}) window before closing the MPF Applicator. The log window is used to alert you to any problems that arose during processing. Most often, problems are due to malformed input (i.e. probes with missing values).
+
+\subsection*{Creating new processing modules}
+
+\subsubsection*{Starting the MPF Designer}
+To create a new module, start the MPF Applicator by right-clicking on a probe list and selecting ``Mayday Processing Framework'' from the ``Data Processing'' submenu. In the Applicator, click on ``New'' to invoke the MPF Designer.
+
+Creating a new processing pipeline consists of a few basic steps:
+
+\begin{itemize}
+\item Adding modules to the pipeline
+\item Setting module options
+\item Connecting the modules
+\item Configuring global pipeline options
+\end{itemize}
+
+\subsubsection*{Adding modules}
+
+To add a new module to the pipeline, simply select the module from module list in the ``Add module'' menu (in the Designer menu bar). The new module will appear in the pipeline view. You can set the module's options by clicking on its ``Options'' button.
+
+\subsubsection*{Connecting modules}
+
+\Figure[!ht]{desg1.eps}{ MPF Designer showing a pipeline}{0.5}
+
+Once you have more than one module in your pipeline, you can create the pipeline graph (see figure \ref{desg1.eps}) by connecting modules together. To connect two modules A and B, start by clicking on an output slot of module A. Then click on one of the input slots of module B. This will link the two modules and the pipeline graph will be updated to reflect the new logical ordering of the modules, i.e. ``A before B''. To disconnect the two modules, simply create a new connection either starting at A's output slot or ending at B's input slot.
+
+\subsubsection*{Removing modules}
+
+To remove a module from your pipeline, click the appropriate ``Remove'' button. The pipeline view will be update to reflect your changes.
+
+\subsubsection*{Validating the pipeline}
+
+If you're done connecting the modules, you should check whether the pipeline graph is valid. In the Designer menu bar, click on ''Options'', then on ''validate''. Only valid pipelines can be used to process data.
+
+\subsubsection*{Pipeline options}
+
+\Figure[!ht]{desg2.eps}{ MPF Designer showing the pipeline options window}{0.5}
+
+Finally, save your new pipeline by selecting ``Save as...'' from the ``File'' menu in the Designer menu bar. This will bring up the global pipeline options window (see figure \ref{desg2.eps}). Here you can name your pipeline, write a description of what your pipeline does and set the pipeline's version number. Please read the provided help texts for more information on these options. Click on the ``?'' button next to an option's name to read its help text.
+
+\medskip
+The global pipeline options dialog can also be opened from the Designer menu bar by clicking on ``Options'' and then selecting ``Module options''.
+
+\subsubsection*{Externalized options}
+
+An important decision when designing a pipeline is which internal options should be exposed to users of the pipeline. Such options are called ''externalized'' options within the MPF. Options can be externalized from the global pipeline options window. For each externalized option, a new name and description as well as a default value can be set (see figure \ref{desg3.eps}).
+
+\Figure[!ht]{desg3.eps}{ Configuring an externalized option}{0.5}
+
+  % this must never be removed!
+  \label{lastpage}
+
+\end{document}
+

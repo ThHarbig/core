@@ -1,0 +1,5 @@
+The files in the JamaSubset directory are taken from "Jama: Java Matrix Package" at
+	http://math.nist.gov/javanumerics/jama/
+They are in public domain.
+
+I only modified them so that they are now in the package mayday.visualization.JamaSubset

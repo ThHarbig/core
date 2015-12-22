@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Transpose"/>
+	<quickinfo><![CDATA[#
+# Transpose the expression matrix, to handle the probes as
+# experiments and vice versa
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

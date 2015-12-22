@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+"
+      codebase="CODEBASE"
+      href="plugins.jnlp">
+    <information>
+        <title>Mayday Plugins</title><offline-allowed/>
+        <vendor>Integrative Transcriptomics, Center for Bioinformatics, University of Tuebingen, Germany</vendor>
+    </information>
+    <security><all-permissions/></security>
+    <resources>
+        <extension name="Air" href="air.jnlp"/>
+        <extension name="Machine Learning" href="mlearning.jnlp"/>
+        <extension name="Pathways" href="pathways.jnlp"/>
+        <extension name="Gaggle" href="gaggle.jnlp"/>
+        <extension name="Level2 Plugins" href="level2.jnlp"/>
+    </resources>
+    <component-desc/>
+</jnlp>

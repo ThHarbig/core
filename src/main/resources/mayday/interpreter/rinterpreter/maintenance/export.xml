@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Support, Tabular Export"/>
+	<quickinfo><![CDATA[#
+# R for Mayday, maintenance
+#
+# Export the expression matrix to a tab
+# separated file.
+#
+# NAs will be inserted whenever there's a null
+# value.
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

@@ -1,0 +1,130 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>mayday</groupId>
+    <artifactId>core</artifactId>
+    <packaging>jar</packaging>
+    <version>2.14</version>
+    <name>core</name>
+    <url>http://www.microarray-analysis.org/</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>batik</groupId>
+            <artifactId>batik</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math</artifactId>
+            <version>2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.13</version>
+        </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>at.jta</groupId>
+            <artifactId>WinRegistry</artifactId>
+            <version>4.5</version>
+        </dependency>
+    </dependencies>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.5</version>
+                <configuration>
+                    <linkXref>true</linkXref>
+                    <sourceEncoding>utf-8</sourceEncoding>
+                    <targetJdk>1.7</targetJdk>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>utf-8</encoding>
+                </configuration>
+            </plugin>
+            <!-- jar settings -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>mayday.core.Mayday</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Permissions>all-permissions</Permissions>
+                            <BuildInfo>${project.artifactId}-${project.version}-${maven.build.timestamp}</BuildInfo>
+                            <Application-Name>${artifactId}</Application-Name>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <!-- set jnlp -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>webstart-maven-plugin</artifactId>
+                <version>1.0-beta-6</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>keytool-api-1.7</artifactId>
+                        <version>1.5</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <!-- replace with corret URL when deploying -->
+                    <codebase>${codebase}</codebase>
+                    <libPath>jars</libPath>
+                    <outputJarVersions>true</outputJarVersions>
+                    <jnlp>
+                        <inputTemplateResourcePath>${basedir}/src/main/jnlp/</inputTemplateResourcePath>
+                        <inputTemplate>template.vm</inputTemplate>
+                        <spec>6.0</spec>
+                        <j2seVersion>1.7+</j2seVersion>
+                        <outputFile>core.jnlp</outputFile>
+                        <mainClass>mayday.core.Mayday</mainClass>
+                        <offlineAllowed>true</offlineAllowed>
+                    </jnlp>
+                    <gzip>true</gzip>
+                    <!-- needed if not on tomcat server -->
+                    <outputJarVersions>false</outputJarVersions>
+                    <verbose>true</verbose>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

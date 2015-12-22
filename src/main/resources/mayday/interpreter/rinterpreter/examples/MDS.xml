@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Multidimensional Scaling"/>
+	<quickinfo><![CDATA[#
+# multidimensional scaling, using 
+#    cmdscale {mva} (classical metric multidim. scaling), 
+#    isoMDS {MASS} (Kruskal's non-metric MDS) or
+#    sammon {MASS} (Sammon's non-linear mapping)
+#
+#  R for Mayday example showing the creation of a new
+#  MasterTable and DataSet
+#
+#  Afterwards, a clustering is made.
+# 
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name="method" default="&quot;cmdscale&quot;" description="method; one out of {&quot;cmdscale&quot;, &quot;isoMDS&quot;,&quot;sammon&quot;}">
+			<type name="selection">
+				<entry value="&quot;cmdscale&quot;"/>
+				<entry value="&quot;isoMDS&quot;"/>
+				<entry value="&quot;sammon&quot;"/>
+			</type>
+		</param>
+		<param name="k" default="3" description="number of dimensions to return">
+			<type name="default" noedit="false"/>
+		</param>
+		<param name="n.clust" default="3" description="number of clusters">
+			<type name="default" noedit="false"/>
+		</param>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

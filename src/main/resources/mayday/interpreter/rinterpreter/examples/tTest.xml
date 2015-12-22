@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="t-Test"/>
+	<quickinfo><![CDATA[#  
+#  t-test application for 'R for Mayday'.
+#  
+#  A simple two-sample, two-sided t-test returning the call and
+#  the p-value as MIOs.
+#
+#  2 probelists are created for up-regulated and down-regulated
+#  probes.
+#
+#  The p-value, the call {-1,1} and if requested the mean of the
+#  groups.
+#
+#  The t-test will always be performed over the whole mastertable.
+#
+#  NA values are ignored.
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+		<param name=" 
+	group.name.test"/>
+		<param name=" cols.test"/>
+		<param name=" 
+	group.name.reference"/>
+		<param name=" cols.reference"/>
+		<param name="group.means" default="&quot;both&quot;" description="Which means should be returned">
+			<type name="selection">
+				<entry value="&quot;both&quot;"/>
+				<entry value="&quot;test&quot;"/>
+				<entry value="&quot;reference&quot;"/>
+				<entry value="&quot;none&quot;"/>
+			</type>
+		</param>
+		<param name="sig.level" default="0.05" description="Significance level"/>
+	</paramlist>
+	<requires>
+		<mio id="signif" classname="mayday.core.mi.DoubleMIO" direction="OUT"/>
+		<mio id="" classname="mayday.core.mi.DoubleMIO" direction="OUT"/>
+	</requires>
+</RSourceDescription>

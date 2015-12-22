@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE RSourceDescription SYSTEM 'RSourceDescription.dtd'>
+
+<RSourceDescription>
+	<functionname id="run" descriptor="Support, Save"/>
+	<quickinfo><![CDATA[#
+#  R for Mayday, maintenance
+#
+#  Save the current data set in RData format.
+#  This can be used to write and test applicable
+#  functions outside Mayday.
+#
+]]></quickinfo>
+	<paramlist>
+		<param name="DATA" description="Mayday's data structures"/>
+	</paramlist>
+	<requires>
+	</requires>
+</RSourceDescription>

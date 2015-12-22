@@ -1,0 +1,31 @@
+package mayday.vis3.gradient.gui.setuppers;
+
+import javax.swing.JComponent;
+
+import mayday.vis3.gradient.ColorGradient;
+import mayday.vis3.gradient.gui.AbstractGradientSetupComponent;
+import mayday.vis3.gradient.gui.GradientPreviewPanel;
+
+public class SetupPreview extends AbstractGradientSetupComponent {
+		
+	protected GradientPreviewPanel preview;
+	
+	public SetupPreview() {
+		preview = new GradientPreviewPanel(ColorGradient.createDefaultGradient(0, 16));
+	}
+
+	public JComponent getJComponent() {
+		return preview;
+	}
+
+	public void modifyGradient(ColorGradient c) {
+		//void
+	}
+
+
+	public void updateFromGradient(ColorGradient c, boolean overrideEverything) {
+		preview.setGradient(c);
+		
+	}
+
+}

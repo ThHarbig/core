@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="$encoding"?>
+<jnlp
+    spec="$jnlpspec"
+    codebase="$jnlpCodebase"
+    href="$outputFile">
+  <information>
+#if($project.Name)
+    <title>$project.Name</title>
+#end
+#if($project.Organization.Name)
+    <vendor>$project.Organization.Name</vendor>
+#end
+#if($project.Url)
+    <homepage href="$project.Url"/>
+#end
+#if($project.Description)
+    <description>$project.Description</description>
+#end
+#if($offlineAllowed)
+    <offline-allowed/>
+#end
+    <icon href="icon32.gif" width="32" kind="default"/>
+    <icon href="splash.png" kind="splash"/>
+  </information>
+#if($allPermissions)
+  <security>
+     <all-permissions/>
+  </security>
+#end
+  <update check="timeout" policy="prompt-run"/>
+  <resources>
+    <j2se version="$j2seVersion"/>
+     $dependencies
+
+     <!-- Load the plugins -->
+     <extension name="Mayday Plugins and Libraries" href="plugins.jnlp"/>
+
+     <property name="xdock:name" value="Mayday - Microarray Data Analysis"/>
+     <!-- flag to indicate a webstart -->
+     <!-- in newer java version custom webstart properties need a 'jnlp' prefix -->
+     <property name="jnlp.mayday.webstart" value="true"/>
+  </resources>
+  <application-desc main-class="$mainClass"/>
+</jnlp>
+

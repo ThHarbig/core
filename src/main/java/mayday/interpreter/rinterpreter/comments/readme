@@ -1,0 +1,218 @@
+Please read this file before using the R for Mayday plug-in.
+
+0) System requirements
+
+    + Mayday: at least version 1.1
+    
+    + R: at least 1.9.0
+      The interface has been tested on 1.9.0 and 2.0.0.
+      
+      + For creation of plots:
+         - svg: package RSvgDevice
+         - png,jpg: RBitmap.{so|dll} (shared library) in the $(R_HOME)/bin/ directory 
+      
+    + On Win9x Systems sh.exe must be installed and its path
+      must be contained in the PATH environment variable.
+
+
+1) Installation.
+
+	+ Copy the plug-in classes into your Mayday plug-in directory,
+	  so that the path looks like $(PluginPath)/interpreter/rinterpreter/
+	
+	+ The plug-in contains an R installable package called RForMayday_x.y.tar.gz;
+	  you have to install this via R's package installer:
+	  	  R CMD INSTALL RForMayday_x.y.tar.gz
+	  	
+	  	Please refere to the R manual for information about the package
+	  	installer, especially Windows users are recommended to read this manual.
+	  	
+	  Win32/MacOs X: 
+	  		 If the installation fails, you will need some tools.
+	         See R's installing manual / FAQ.
+	         OR:
+	         You can simply unpack the RForMayday.zip, wich is a
+	         "precompiled" version. Since there is no native code
+	         inside, this should work on other machines too.	
+	
+2) Usage.
+
+	+ Make sure that your plug-in path is set in Mayday.
+	
+	+ The R for Mayday plug-in is available via the "Analysis"-Menu item
+	  and "Data Import"-Menu item.  	
+	
+	+ The interface can use different R releases. Note that the RForMayday package
+	  must be installed in each release that is intended to use.
+  
+    + (20.06.2004)
+      A mechanism (beta!!!) has been added to run the interface in internal mode.
+      That means Plug-ins can use R as a subprocess.
+      
+      How to:
+      1.)  Create an object of type RInterpreterPlugin;
+      
+      2.)  Create an object of type RSource via RSource.createInstance(....);
+        2.a)  Set the values of the RSource parameters.
+      
+      3.)  Create an object of type RSettings via RSettings.createInitializedInstance(RSource);
+      
+      4.)  Call the RInterpreter's runInternal(....) method.
+      
+      5.)  You can catch specific 'R for Mayday'-exceptions using the exceptions
+           defined in mayday.interpreter.rinterpreter.exceptions.
+      
+      (Note: This mechanism has not been tested yet!)
+
+
+3) Updates/History:
+	
+	VERSION 1.0
+	
+	+ (16.06.2004) Released as "Student Research Project" at the 
+	               WSI, University of Tuebingen
+	
+	
+	to VERSION 1.1:
+	
+	+ (18.07.2004) Rearrangement of the Java package structure
+	               => Now there are subdirectories: "gui" and "core".
+	
+	+ (18.07.2004) A new frame has been added to show RPlots if any
+	               have been created.
+
+	               The user is able to decide in which format the
+	               plotting will be done. (She/He cannot change the
+	               properties of the choosen plotting device. The default
+	               settings are applied.)
+
+	               Currently the following devices are possible:
+	               	 - svg (requires the R package RSvgDevice)
+	               	 - postscript
+	               	 - pdf
+	               	 - png,jpg (requires the shared library Rbitmap.{so|dll} in
+	               	            the $(RHOME)/bin/ directory) 
+	  
+	 + (05.11.2004) Now you can kill the R-process from within the
+	                Progress-Dialog.
+	                
+	 + (05.11.2004) There's a new button to delete the content of the
+	                logfile.
+	                Logfiles now have the header "# RForMayday Logfile"
+	 
+	 + (05.11.2004) Now, sorting of the sources list is possible (via
+	                a context menu).
+	                
+	 + (05.11.2004) Now the changes in the RSettingsDialog are stored when 
+	                pressing the "Next" button.
+
+
+	 to VERSION 1.2:
+	 
+	 + (21.11.2004) Now, you can send information about the current process 
+	                from  R to Mayday 
+	                via the 
+                                 send.process.state() 
+                    function. 
+                    The given message will be displayed in the RProgressDialog. 
+                    The current-value can be used to give a sort of percentage 
+                    of completion. This value must then be in the range [0,1000]. 
+                    If it exceeds the range or is NULL, the JProgressBar is set 
+                    to indeterminate mode.
+                    
+                    Currently, the mechanism used works with a so-called "status-file"
+                    and an RProcessStateMonitor that observes the status-file for new
+                    information each 200 milliseconds (this value will be changed probably). 
+                    With the send.process.state() function the content of the status-file
+                    will be changed.
+                    The problem here is that not all changes are reported. That is
+                    not really problematic because we cannot read as fast :)
+                    
+                    A better solution would directly invoke the 
+                    RProgressMonitor.fireRProcessStateChanged() method from native 
+                    C-Code (JNI and R-C-interface). But this will only be added, if
+                    this solution can be driven platform independent.
+      
+     + (22.11.2004) The ability to terminate a running R-process has been corrected.
+                    Since the Process.destroy() method does not! kill the process properly,
+                    it must be removed from the operating systems scheduler with some
+                    system-specific effort. This can be done by invoking either 
+                    "kill -9 <pid>" (on unix-like systems) or "tskill <pid>" (on WinXP).
+					Another problem here is to get R's process id since Java knows
+					nothing about those things. Fortunately the R-environment provides a 
+					simple way to get it's own pid which will be printed to a so-called 
+					pid-file ("rfm_R.pid" in the current working directory). The pid-file 
+					is always created at the beginning of an R-run (see temporary source 
+					files).
+					
+					When the RProgessDialog's CancelAction is invoked and fires the
+					RProcessKilledEvent the RProcessThread running R will call either of the
+					kill commands via Runtime.exec(). 
+					
+     + (13.02.2004) Cell editors for the parameter tables. Now a
+                    parameter can be given a type. Thus parameter
+                    values can be restricted to a list of possible
+                    values. See "cluster.R/xml" for an example.
+     
+                    Minor refactoring of the internal infrastructure.			
+					
+     + (31.05.2005) MIO interface (beta) for "R for Mayday". The application notes
+                    are given seperately in RForMayday_MIO.pdf. 
+                    
+     + (05.06.2005) Minor refactoring to release the plugin as a jar.      
+     
+     + (05.06.2005) Problem indicators introduced to visualize problems with
+                    a warning sign (a yellow triangle with a "!").
+	 
+	 
+	
+4) Known issues & bugs:
+
+	+ There is a problem when using default values containing braces
+	  as the last applicable-function-parameter, e.g.
+
+	     function(DATA, x=1, y=c("yes","no")), the parameter list then is ignored
+	     
+	     whereas 
+	     
+	     function(DATA, y=c("yes","no"), x=1) works fine!
+	     
+	     (It seems to be a problem with the 
+	      mayday.interpreter.rinterpreter.RFunctionParser)
+		
+
+	+ There is no support for ...-parameters in the applicable function.
+			  
+	+ PNG plots: Sometimes the png plot cannot be shown
+	  in the RPlotsFrame.
+	  The exception comes from the specific PNG image reader from the
+	  ImageIO-API. It says: "LUT has improper length!"
+	  (Maybe it is better to use jpeg or svg)
+	  
+	  => The problem seems do correspond to the default png reader that
+	     is incapable of reading png with uncommon palette entries,
+	     e.g. a palette with 256 entries, where only 16 are used.
+	     (LUT = LookUp Table)
+	     
+	  
+	+ SVG: Under WindowsXP sometimes the R environment crashes after
+	  creating svg plots and then shutting R down. That is no real
+	  problem, just press the "Close" Button and ignore it.
+	  The computed results are ok, all files are ok, the svg plots are ok.
+	  
+	+ With R-2.0.0: The transparency of plotted objects has changed its
+	  values, thus there are problems with the RSvgDevice driver.
+	  I have already fixed this problem and sent a bug report to the author
+	  of the device driver.
+		 
+
+
+--
+Matthias Zschunke,
+zschunke@informatik.uni-tuebingen.de
+www.zbit.uni-tuebingen.de/pas/mayday
+
+	  
+		  
+		  
+		  
