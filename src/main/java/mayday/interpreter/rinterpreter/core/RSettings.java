@@ -17,7 +17,10 @@ import mayday.core.meta.MIType;
 import mayday.interpreter.rinterpreter.RDefaults;
 import at.jta.RegistryErrorException;
 import at.jta.Regor;
+<<<<<<< HEAD
 import at.jta.Key;
+=======
+>>>>>>> bd8805447b59c9475dfbcdf6f975397ad3c2209e
 
 /**
  * Class that collects the setting.
@@ -207,7 +210,11 @@ public class RSettings
 		if (os.toLowerCase().contains("windows")) {
 			try {
 				Regor registry = new Regor();
+<<<<<<< HEAD
 				Key key = registry.openKey(Regor.HKEY_LOCAL_MACHINE, "Software\\R-core\\R",Regor.KEY_READ);
+=======
+				int key = registry.openKey(Regor.HKEY_LOCAL_MACHINE, "Software\\R-core\\R",Regor.KEY_READ);
+>>>>>>> bd8805447b59c9475dfbcdf6f975397ad3c2209e
 				String value = Regor.parseValue( registry.readValue(key, "InstallPath"));
 				return value+File.separator+"bin"+File.separator+"R.exe";
 			} catch (RegistryErrorException e) {

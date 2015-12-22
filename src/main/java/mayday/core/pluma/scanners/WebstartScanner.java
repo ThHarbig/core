@@ -13,9 +13,13 @@ import mayday.core.pluma.filemanager.FMFile;
 
 public class WebstartScanner {
 
+<<<<<<< HEAD
 	//public static final String WEBSTART_ENTRY = "META-INF/webstart.files";
 	// Note: when changing adapt build.bash
 	public static final String WEBSTART_ENTRY = "resources_list.txt";
+=======
+	public static final String WEBSTART_ENTRY = "META-INF/webstart.files";
+>>>>>>> bd8805447b59c9475dfbcdf6f975397ad3c2209e
 	
 	private static final WebstartScanner theInstance = new WebstartScanner();
 	
