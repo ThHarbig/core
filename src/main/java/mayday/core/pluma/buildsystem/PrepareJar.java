@@ -23,25 +23,17 @@ import mayday.core.pluma.scanners.WebstartScanner;
  * 1) add AbstractPlugins to the Manifest
  * 2) add a list of all resources for Mayday Webstart
  */
-<<<<<<< HEAD
+
 // TODO imrove parameter parsing (perhaps a help function?)
-=======
->>>>>>> bd8805447b59c9475dfbcdf6f975397ad3c2209e
 public class PrepareJar {
 	
 	private final static PrepareJar helper = new PrepareJar();
 	
 	public static void main(String[] args) {
-<<<<<<< HEAD
-
 		// name of the output files
 		// memo: Adjust in build.bash
 		String MANIFEST = "plugins.mf";
 		String RESOURCES = WebstartScanner.WEBSTART_ENTRY;
-
-=======
-	
->>>>>>> bd8805447b59c9475dfbcdf6f975397ad3c2209e
 		if (args.length<2) {
 			System.err.println("Arguments: JarFile OutputFolder");
 			System.exit( 1);
@@ -53,12 +45,8 @@ public class PrepareJar {
 			System.exit( 1);
 		}
 		try {
-<<<<<<< HEAD
 			new File(args[1] + File.separator + MANIFEST);
 			new File(args[1] + File.separator + RESOURCES);
-=======
-			new File(args[1]+"/META-INF").mkdirs();
->>>>>>> bd8805447b59c9475dfbcdf6f975397ad3c2209e
 		} catch(Exception e) {
 			System.err.println("Can't write to output path");
 			System.exit( 1);
@@ -115,20 +103,12 @@ public class PrepareJar {
 			System.out.println(PluginList.toString());
 			
 			
-<<<<<<< HEAD
 			BufferedWriter bowr = new BufferedWriter(new FileWriter(args[1]+File.separator+MANIFEST));
-=======
-			BufferedWriter bowr = new BufferedWriter(new FileWriter(args[1]+File.separator+"META-INF/MANIFEST.MF"));
->>>>>>> bd8805447b59c9475dfbcdf6f975397ad3c2209e
 			bowr.append(PluginList.toString());
 			bowr.flush();
 			bowr.close();
 			
-<<<<<<< HEAD
 			bowr = new BufferedWriter(new FileWriter(args[1]+File.separator+RESOURCES));
-=======
-			bowr = new BufferedWriter(new FileWriter(args[1]+File.separator+WebstartScanner.WEBSTART_ENTRY));
->>>>>>> bd8805447b59c9475dfbcdf6f975397ad3c2209e
 			bowr.append(FileList.toString());
 			bowr.flush();
 			bowr.close();

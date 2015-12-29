@@ -72,11 +72,7 @@ public final class MaydayDefaults
         /**
          * Libraries that needs to be loaded for plugins.
          */
-<<<<<<< HEAD
         private static final String NODE_LIBRARIES = "libraries";
-=======
-        private static final String NODE_LIBRARIES = "libraries";        
->>>>>>> bd8805447b59c9475dfbcdf6f975397ad3c2209e
         /**
          * Replaces NODE_LIBRARIES in the case of webstart
          */
@@ -278,19 +274,11 @@ public final class MaydayDefaults
     //end MZ
 
     // FB 2011-11-30: Mac Java does not parse <argument> JNLP tags, so we need to pass arguments in an extra variable
-<<<<<<< HEAD
     // AG 2015-11-25: In newer java versions, parameters passed via jnlp files should have 'jnlp.' prefix
     public static final String WEBSTART_ARGUMENTS_KEY = "jnlp.mayday.webstart.arguments";
     //MZ 2006-06-25
     //webstart application
     public static final String WEBSTART_PROPERTIES_KEY = "jnlp.mayday.webstart";
-=======
-    public static final String WEBSTART_ARGUMENTS_KEY = "mayday.webstart.arguments";
-    
-    //MZ 2006-06-25
-    //webstart application
-    public static final String WEBSTART_PROPERTIES_KEY = "mayday.webstart";
->>>>>>> bd8805447b59c9475dfbcdf6f975397ad3c2209e
     public static boolean isWebstartApplication() {
         return System.getProperty(WEBSTART_PROPERTIES_KEY)!=null &&
         Boolean.parseBoolean(System.getProperty(WEBSTART_PROPERTIES_KEY));
