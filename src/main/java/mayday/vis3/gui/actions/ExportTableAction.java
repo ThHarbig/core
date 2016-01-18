@@ -126,7 +126,6 @@ public class ExportTableAction extends AbstractAction {
 			init();
 		}
 
-
 		protected void init()
 		{
 			this.delimiter = "\t";
@@ -303,7 +302,6 @@ public class ExportTableAction extends AbstractAction {
 			this.semicolonDelimiter.setEnabled( enable );
 			this.blankDelimiter.setEnabled( enable );
 		}
-
 
 		public void actionPerformed( ActionEvent event )
 		{
