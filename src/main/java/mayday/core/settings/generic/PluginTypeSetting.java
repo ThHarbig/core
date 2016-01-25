@@ -199,6 +199,8 @@ public class PluginTypeSetting<T extends AbstractPlugin> extends StringSetting i
 				// add new editor component
 				if (clonedChildSetting!=null) {
 					pnl.add( (clonedChildSC = clonedChildSetting.getGUIElement()) .getEditorComponent(), BorderLayout.CENTER);
+					// next line solves resize issues in 'graphics export' dialog when resizing
+					clonedChildSC.getEditorComponent().setMinimumSize(clonedChildSC.getEditorComponent().getPreferredSize());
 				}
 				
 				// fit GUI
