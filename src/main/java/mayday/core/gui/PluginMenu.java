@@ -1,6 +1,6 @@
 package mayday.core.gui;
 
-import java.awt.Component;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,6 +27,7 @@ import mayday.core.pluma.PluginManagerListener;
 import mayday.core.pluma.prototypes.ApplicableFunction;
 import mayday.core.pluma.prototypes.MenuMakingPlugin;
 import mayday.core.pluma.prototypes.MenuPlugin;
+import sun.awt.SunToolkit;
 
 /** PluginMenu automatically updates a menu's content on each access taking into account
  * - the current selection of objects if it is a context menu
@@ -79,8 +80,17 @@ public abstract class PluginMenu<SelectableObjectType> extends JMenu implements 
 		else if (needUpdateSelection)
 			updateSelection();	
 		// this line is necessary to make the menu work both in Menu bar as well as in context click
-		super.getPopupMenu().setInvoker(this);
-		return super.getPopupMenu();
+		JPopupMenu jpm = super.getPopupMenu();
+		jpm.setInvoker(this);
+		// make sure popup fits screen
+		Dimension prefdim = jpm.getPreferredSize();
+		double maxheight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+		jpm.setPopupSize(new Dimension(
+				// keep old width
+				(int) prefdim.getWidth(),
+				// either old height, or max height - buffer
+				(int) Math.min(prefdim.getHeight(), maxheight)));
+		return jpm;
 	}
 
 	protected void addToPopup(JPopupMenu ppm, Object o) {
