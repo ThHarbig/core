@@ -27,7 +27,7 @@
      <all-permissions/>
   </security>
 #end
-  <update check="timeout" policy="prompt-run"/>
+  <update check="background" />
   <resources>
     <j2se version="$j2seVersion"/>
      $dependencies
