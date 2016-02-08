@@ -4,7 +4,11 @@
       href="plugins.jnlp">
     <information>
         <title>Mayday Plugins</title><offline-allowed/>
-        <vendor>Integrative Transcriptomics, Center for Bioinformatics, University of Tuebingen, Germany</vendor>
+        <vendor>
+            Integrative Transcriptomics, Center for Bioinformatics,
+            University of Tuebingen, Germany
+        </vendor>
+        <url>http://www.it.informatik.uni-tuebingen.de</url>
     </information>
     <security><all-permissions/></security>
     <resources>
