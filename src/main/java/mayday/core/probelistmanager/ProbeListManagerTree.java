@@ -272,8 +272,8 @@ implements ProbeListListener, ProbeListManager
 				latestInvocation = new Runnable() {
 					
 					public void run() {						
-						String message = "The MasterTable contains "+everything.size()+" probes that are not contained in any ProbeList.\n" +
-								"Would you like to remove them?";
+						String message = "The MasterTable contains "+everything.size()+" probes that are no longer contained in any ProbeList.\n" +
+								"Would you like to remove the meta-info for these probes?";
 						if (JOptionPane.showConfirmDialog((Component)null, message, dataSet.getName(), 
 								JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION) {
 						

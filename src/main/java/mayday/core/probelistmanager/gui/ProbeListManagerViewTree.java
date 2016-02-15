@@ -10,13 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
-import javax.swing.AbstractAction;
-import javax.swing.Box;
-import javax.swing.JMenu;
-import javax.swing.JPopupMenu;
-import javax.swing.JToolBar;
-import javax.swing.ListModel;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
@@ -327,11 +321,19 @@ implements ProbeListManagerView {
 			super( "Close" );
 		}
 
-		public void actionPerformed( final ActionEvent event ) {	
+		public void actionPerformed( final ActionEvent event ) {
+
+			// ask for conformation again!
+			String message = "Do you really want to remove the selected Probelists?";
+			if (JOptionPane.showConfirmDialog((Component)null, message, "Remove Probelists?",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)!=JOptionPane.YES_OPTION) {
+				return;
+			}
 
 			final Object[] l_selectedValues = getSelectedValues();
 
 			probeListManagerTree.setSilent( true );
+
 
 			for ( int i = 0; i < l_selectedValues.length; ++i ) {
 				// finally notify listeners
