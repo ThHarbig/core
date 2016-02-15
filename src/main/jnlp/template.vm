@@ -21,6 +21,10 @@
 #end
     <icon href="icon32.gif" width="32" kind="default"/>
     <icon href="splash.png" kind="splash"/>
+    <shortcut online="false">
+      <desktop/>
+      <menu submenu="Mayday"/>
+    </shortcut>
   </information>
 #if($allPermissions)
   <security>
@@ -28,10 +32,6 @@
   </security>
 #end
   <update check="background" />
-  <shortcut online="false">
-    <desktop/>
-    <menu submenu="Mayday"/>
-  </shortcut>
   <resources>
     <j2se version="$j2seVersion"/>
      $dependencies
