@@ -28,6 +28,10 @@
   </security>
 #end
   <update check="background" />
+  <shortcut online="false">
+    <desktop/>
+    <menu submenu="Mayday"/>
+  </shortcut>
   <resources>
     <j2se version="$j2seVersion"/>
      $dependencies
