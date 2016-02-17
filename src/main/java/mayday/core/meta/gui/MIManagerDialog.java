@@ -1,12 +1,9 @@
 package mayday.core.meta.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.JMenuBar;
+import javax.swing.*;
 import javax.swing.event.MouseInputAdapter;
 
 import mayday.core.DataSetEvent;
@@ -41,6 +38,36 @@ public class MIManagerDialog extends MaydayDialog implements WindowListener, Dat
 					if ( e.getClickCount() == 1 ) { 
 						mema.getPopupMenu().show( MIManagerDialog.this, e.getX(), e.getY() );
 					}
+			}
+		});
+
+		// Add close button with fancy border for seperation
+		JButton closeBtn;
+		{
+			JPanel BottomPanel = new JPanel();
+			BoxLayout BottomPanelLayout = new BoxLayout(BottomPanel, javax.swing.BoxLayout.Y_AXIS);
+			BottomPanel.setLayout(BottomPanelLayout);
+			add(BottomPanel, BorderLayout.SOUTH);
+			BottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+			{
+				JSeparator jSeparator2 = new JSeparator();
+				BottomPanel.add(jSeparator2);
+				JPanel ButtonPanel = new JPanel();
+				BottomPanel.add(ButtonPanel);
+				FlowLayout ButtonPanelLayout = new FlowLayout();
+				ButtonPanelLayout.setAlignment(FlowLayout.RIGHT);
+				ButtonPanel.setLayout(ButtonPanelLayout);
+				{
+					closeBtn = new JButton();
+					ButtonPanel.add(closeBtn);
+					closeBtn.setText("Close");
+				}
+			}
+		}
+		// make that button actually close the window
+		closeBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
 			}
 		});
 		
