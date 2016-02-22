@@ -36,8 +36,8 @@ public class ScriptablePlotContainer extends Container implements VisualizerMemb
 		visualizer = vis;
 		content = windowContent;
 		viewSetting = new HierarchicalSetting("View")
-		.setLayoutStyle(HierarchicalSetting.LayoutStyle.TABBED)
-		.setCombineNonhierarchicalChildren(true);
+				.setLayoutStyle(HierarchicalSetting.LayoutStyle.TABBED)
+				.setCombineNonhierarchicalChildren(true);
 		add(content); 
 		content.addNotify();
 		setSize(w,h);
