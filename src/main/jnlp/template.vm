@@ -31,7 +31,7 @@
      <all-permissions/>
   </security>
 #end
-  <update check="background" />
+  <update check="always" policy="always" />
   <resources>
     <j2se version="$j2seVersion"/>
      $dependencies
