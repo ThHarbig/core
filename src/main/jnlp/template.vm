@@ -5,7 +5,7 @@
     href="$outputFile">
   <information>
 #if($project.Name)
-    <title>$project.Name</title>
+    <title>Mayday - Expression Data Analysis</title>
 #end
 #if($project.Organization.Name)
     <vendor>$project.Organization.Name</vendor>
