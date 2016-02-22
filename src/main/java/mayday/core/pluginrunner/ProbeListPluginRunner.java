@@ -50,7 +50,7 @@ public class ProbeListPluginRunner {
 					SwingUtilities.invokeLater(new Runnable(){
 						public void run() {
 							JOptionPane.showMessageDialog( null,
-									exception.getMessage(),
+									exception.toString(),//getMessage(),
 									MaydayDefaults.Messages.ERROR_TITLE,
 									JOptionPane.ERROR_MESSAGE );
 
