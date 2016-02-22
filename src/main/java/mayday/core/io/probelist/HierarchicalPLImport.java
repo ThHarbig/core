@@ -128,7 +128,7 @@ public class HierarchicalPLImport extends AbstractPlugin implements ProbelistFil
 		catch ( Exception exception )
 		{
 
-			JOptionPane.showMessageDialog( null, exception.getMessage(),
+			JOptionPane.showMessageDialog( null, exception.toString(),
 					MaydayDefaults.Messages.ERROR_TITLE, JOptionPane.ERROR_MESSAGE );
 		}
 

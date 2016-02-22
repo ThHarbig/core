@@ -276,7 +276,7 @@ public class PreferencesDialog extends MaydayDialog {
             	l_path = MaydayDefaults.Prefs.getPluginDirectory();
             } catch(Exception exception) {
                 JOptionPane.showMessageDialog( null,
-                		exception.getMessage(), MaydayDefaults.Messages.ERROR_TITLE,
+                		exception.toString(), MaydayDefaults.Messages.ERROR_TITLE,
                         JOptionPane.ERROR_MESSAGE );
             }
                         
