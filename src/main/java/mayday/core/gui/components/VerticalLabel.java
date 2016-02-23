@@ -52,6 +52,10 @@ public class VerticalLabel extends JLabel {
 	public VerticalLabel(boolean clockwise) {
 		this("", null, LEADING, clockwise);
 	}
+	
+	public VerticalLabel(String text, boolean clockwise) {
+		this(text,null,LEADING,clockwise);
+	}
 
 	
 	public static class VerticalLabelUI extends BasicLabelUI {
