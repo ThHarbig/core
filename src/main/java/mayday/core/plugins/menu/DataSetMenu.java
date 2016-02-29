@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.AbstractAction;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
 import mayday.core.DataSet;
 import mayday.core.datasetmanager.gui.DataSetManagerView;
@@ -96,9 +94,14 @@ public class DataSetMenu extends AbstractPlugin implements MenuPlugin {
         // Part 4 - Close Action
         theMenu.add(new AbstractAction("Remove") {
 			public void actionPerformed(ActionEvent e) {
-        		LinkedList<DataSet> removeCand = new LinkedList<DataSet>(DataSetManagerView.getInstance().getSelectedDataSets());
-        		for (DataSet ds : removeCand)
-        			DataSetManagerView.getInstance().closeDataSet(ds);        		
+				String msg = "Do you really want to remove the selected Datasets?";
+				if (JOptionPane.showConfirmDialog((java.awt.Component)null,
+						msg, "Remove Datasets?", JOptionPane.YES_NO_OPTION)
+						== JOptionPane.YES_OPTION) {
+					LinkedList<DataSet> removeCand = new LinkedList<DataSet>(DataSetManagerView.getInstance().getSelectedDataSets());
+					for (DataSet ds : removeCand)
+						DataSetManagerView.getInstance().closeDataSet(ds);
+				}
         	}
         }, false);
         
