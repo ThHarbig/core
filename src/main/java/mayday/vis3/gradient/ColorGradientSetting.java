@@ -54,12 +54,13 @@ public class ColorGradientSetting extends StringSetting {
 	}
 	
 	public ColorGradient getColorGradient() {
-		double curMin = target.getMin();
-		double curMax = target.getMax();
-		target.deserialize(getStringValue());
-		target.setMin(curMin);
-		target.setMax(curMax);
-		return target;
+		ColorGradient copy = new ColorGradient(target);
+		double curMin = copy.getMin();
+		double curMax = copy.getMax();
+		copy.deserialize(getStringValue());
+		copy.setMin(curMin);
+		copy.setMax(curMax);
+		return copy;
 	}
 	
 	@Override

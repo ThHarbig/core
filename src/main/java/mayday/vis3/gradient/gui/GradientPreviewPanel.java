@@ -2,6 +2,7 @@ package mayday.vis3.gradient.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -20,16 +21,19 @@ import javax.swing.event.ChangeListener;
 
 import mayday.core.MaydayDefaults;
 import mayday.vis3.gradient.ColorGradient;
+import mayday.vis3.gradient.gui.setuppers.SetupPreview.ROTATION;
 
 @SuppressWarnings("serial")
 public class GradientPreviewPanel extends JButton {
 
 	ColorGradient gradient;
-	protected boolean editable = false; 
+	protected boolean editable = false;
+	private ROTATION rotation;
 
 	public GradientPreviewPanel(ColorGradient cg) {
 		super("X");
 		gradient = cg;
+		rotation = ROTATION.HORIZONTAL;
 		FontRenderContext l_frc = new FontRenderContext( MaydayDefaults.DEFAULT_FONT_RENDER_CONTEXT.getTransform(), 
 				false, MaydayDefaults.DEFAULT_FONT_RENDER_CONTEXT.usesFractionalMetrics() );
 		TextLayout sLayout = new TextLayout( "0123456789", MaydayDefaults.DEFAULT_PLOT_SMALL_LEGEND_FONT, l_frc );
@@ -75,17 +79,24 @@ public class GradientPreviewPanel extends JButton {
 	}
 	
 	protected int getInnerWidth() {
-		return getWidth() - getInsets().left - getInsets().right;
+		switch(rotation) {
+		case HORIZONTAL:
+			return getWidth() - getInsets().left - getInsets().right;
+		case VERTICAL:
+			return getHeight() - getInsets().top - getInsets().bottom;
+		default:
+			return 0;
+		}
 	}
 	
 	public void paint(Graphics g) {
 		g.setColor(Color.white);
-		g.fillRect(0, 0, getWidth(), getHeight());
+		g.clearRect(0, 0, getWidth(), getHeight());
 		
 		Graphics2D g2 = (Graphics2D)g;
 		
 		AffineTransform originalTransform = g2.getTransform();
-		
+
 		Insets i = getInsets();
 		g2.translate(i.left, i.top);
 		extraManipulations(g2);
@@ -106,6 +117,10 @@ public class GradientPreviewPanel extends JButton {
 	
 	protected void extraManipulations(Graphics2D g2) {
 		// nothing here
+		if(rotation == ROTATION.VERTICAL) {
+			g2.rotate(Math.toRadians(-90));
+			g2.translate(-getHeight()+getInsets().top+getInsets().bottom,0);
+		}
 	}
 
 	protected void drawGradient(Graphics2D g2, int width ) {
@@ -140,11 +155,17 @@ public class GradientPreviewPanel extends JButton {
 
 		TextLayout sLayout = new TextLayout( sValue, MaydayDefaults.DEFAULT_PLOT_SMALL_LEGEND_FONT, l_frc );
 		
-		if (realPosition + sLayout.getAdvance() > getInnerWidth() + getInsets().left)
-			realPosition -= sLayout.getAdvance();
+		if(rotation == ROTATION.VERTICAL) {
+			g.translate(realPosition - sLayout.getBounds().getHeight()/2, sLayout.getAscent());
+			g.rotate(Math.toRadians(90));
+		} else {
+			if (realPosition + sLayout.getAdvance() > getInnerWidth() + getInsets().left)
+				realPosition -= sLayout.getAdvance();
+			g.translate(realPosition, sLayout.getAscent());
+		}
 		
-		g.translate(realPosition, sLayout.getAscent());
 		sLayout.draw( g, 0, 0 );
+		
 		g.setTransform(at);
 	}
 
@@ -168,5 +189,20 @@ public class GradientPreviewPanel extends JButton {
 		// re-translate graphics device
 		graphics.translate( -tipX, -tipY );
 	}
-	
+
+	public void setRotation(ROTATION rotation) {
+		this.rotation = rotation;
+		
+		if(rotation == ROTATION.VERTICAL) {
+			FontRenderContext l_frc = new FontRenderContext( MaydayDefaults.DEFAULT_FONT_RENDER_CONTEXT.getTransform(), 
+					false, MaydayDefaults.DEFAULT_FONT_RENDER_CONTEXT.usesFractionalMetrics() );
+			TextLayout sLayout = new TextLayout( "01.23", MaydayDefaults.DEFAULT_PLOT_SMALL_LEGEND_FONT, l_frc );
+
+			setPreferredSize(new Dimension((int)(MaydayDefaults.DEFAULT_PLOT_COLOR_SCALE_HEIGHT+sLayout.getBounds().getWidth())
+					+getInsets().left+getInsets().right, 500));
+			setMinimumSize(getPreferredSize());
+		}
+		
+		repaint();
+	}
 }

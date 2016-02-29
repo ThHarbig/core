@@ -9,7 +9,11 @@ public class BidirectionalHashMap<K1,K2>  {
 	protected HashMap<K1,K2> left = new HashMap<K1, K2>();
 	protected HashMap<K2,K1> right= new HashMap<K2, K1>();
 
-	
+	/**
+	 * put left to right: k1 = left, k2 = right
+	 * @param k1
+	 * @param k2
+	 */
 	public void put(K1 k1, K2 k2) {
 		left.put(k1,k2);
 		right.put(k2,k1);
@@ -48,13 +52,13 @@ public class BidirectionalHashMap<K1,K2>  {
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T> T getRight(Object key) {
+	public <T> T getRightToLeft(Object key) {
 		Object ret = right.get(key);
 		return (T)ret;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T> T getLeft(Object key) {
+	public <T> T getLeftToRight(Object key) {
 		Object ret = left.get(key);
 		return (T)ret;
 	}

@@ -40,9 +40,18 @@ public class ColorGradient {
 	}
 	
 	public static ColorGradient createDefaultGradient(double Min, double Max) {
-		return new ColorGradient(Min, (Max-Min)/2d+Min, Max, true, 1024, MIDPOINT_MODE.Center, new Agent_Tricolore(false, Color.green, Color.black, Color.red, 5.0) );
+		ColorGradient cg = new ColorGradient(Min, (Max-Min)/2d+Min, Max, true, 1024, MIDPOINT_MODE.Center, 
+				new Agent_Tricolore(false, Color.green, Color.black, Color.red, 5.0) );
+		cg.setName("Default");
+		return cg;
 	}
-
+	
+	public static ColorGradient createDefaultGradient(double Min, double Max, PredefinedGradients predefined) {
+		ColorGradient cg = new ColorGradient(Min, (Max-Min)/2d+Min, Max, true, 1024, MIDPOINT_MODE.Center, 
+				new Agent_Tricolore(false, predefined.getLower(), predefined.getMid(), predefined.getUpper(), 5.0));
+		cg.setName(predefined.name());
+		return cg;
+	}
 	
 	public ColorGradient(ColorGradient other) {
 		copySettings(other);
