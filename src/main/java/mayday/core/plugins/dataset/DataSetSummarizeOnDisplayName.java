@@ -135,8 +135,13 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 						}
 					}
 				}
-				
-				DataSet ds = new DataSet(d1.getName()+" - summarized ("+d1.getProbeDisplayNames().getName()+", "+summary+")");
+				DataSet ds;
+				try {
+					ds = new DataSet(d1.getName() + " - summarized (" + d1.getProbeDisplayNames().getName() + ", " + summary + ")");
+				} catch (NullPointerException e) {
+					JOptionPane.showMessageDialog(null, "You should set display names!");
+					return;
+				}
 				resultsets.add(ds);			
 				int noe = d1.getMasterTable().getNumberOfExperiments(); 
 				ds.getMasterTable().setNumberOfExperiments(noe);
