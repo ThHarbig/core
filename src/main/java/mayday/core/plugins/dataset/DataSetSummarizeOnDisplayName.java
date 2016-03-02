@@ -13,7 +13,10 @@ import mayday.core.pluma.PluginInfo;
 import mayday.core.pluma.PluginManagerException;
 import mayday.core.pluma.prototypes.DatasetPlugin;
 import mayday.core.settings.SettingDialog;
+import mayday.core.settings.generic.HierarchicalSetting;
 import mayday.core.settings.typed.AveragingSetting;
+import mayday.core.settings.typed.BooleanSetting;
+import mayday.core.settings.typed.StringSetting;
 import mayday.core.structures.maps.MultiHashMap;
 import mayday.core.tasks.AbstractTask;
 
@@ -40,18 +43,38 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 	}
 
 	public List<DataSet> run(final List<DataSet> datasets) {
-		
+		// get IAverage method
 		AveragingSetting as = new AveragingSetting();
 		SettingDialog sd = new SettingDialog(null, "Select summarization method", as);
 		sd.showAsInputDialog();
-		if (sd.closedWithOK()) {
-			SummarizeC atask = new SummarizeC(datasets, as.getSummaryFunction());
-			atask.start();
-			atask.waitFor();
-			return atask.getResult();
+		if (sd.canceled()) {
+			// cancel
+			return null;
 		}
-		return null;
-			
+
+		// Get additional settings
+		StringSetting regex; // split string
+		BooleanSetting exclusion; // exclude unmapped entries?
+		HierarchicalSetting additionalSettings = new HierarchicalSetting("Summary settings").
+				setLayoutStyle(HierarchicalSetting.LayoutStyle.PANEL_VERTICAL).
+				addSetting(regex = new StringSetting("Split regex",
+						"A regular expression that describes the sub-string that " +
+								"splits entries in your display name",
+						" /// ", false)).
+				addSetting(exclusion = new BooleanSetting("Exclude Unmapped",
+						"Would you like to exclude Probe entries that did not match a new display name?",
+						true));
+		sd = new SettingDialog(null, "Additional Settings", additionalSettings);
+		sd.showAsInputDialog();
+		if(sd.canceled()) {
+			return null;
+		}
+		// Run Summarization
+		SummarizeC atask = new SummarizeC(datasets, as.getSummaryFunction(),
+				regex.getStringValue(), exclusion.getBooleanValue());
+		atask.start();
+		atask.waitFor();
+		return atask.getResult();
 	}
 
 	public static class SummarizeC extends AbstractTask {
@@ -59,11 +82,17 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 		private List< DataSet > datasets;
 		private List< DataSet > resultsets = new LinkedList<DataSet>();
 		private IAverage summary;
+
+		private String regex;
+		private boolean exclusion;
 		
-		public SummarizeC( List<DataSet> datasets2, IAverage summary ) {
+		public SummarizeC( List<DataSet> datasets2, IAverage summary,
+						   String regex, boolean exclusion) {
 			super("Summarizing");
 			this.summary = summary;
 			this.datasets = datasets2;
+			this.regex = regex;
+			this.exclusion = exclusion;
 		}
 
 		protected void doWork() throws Exception {
