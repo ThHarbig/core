@@ -776,16 +776,18 @@ implements Comparable, Cloneable
 			MIGroup mg = masterTable.getDataSet().getProbeDisplayNames();
 			if (mg!=null) {
 				MIType mt = mg.getMIO(this);
-				if (mt==null || mt.toString().trim().length()==0)
-					displayName+="*";
+				if (mt==null || mt.toString().trim().length()==0) {
 					if (exclude) {
 						return null;
+					} else {
+						return displayName + "*";
 					}
-				else
-					displayName=mt.toString();
+				} else {
+					return mt.toString();
+				}
 			}
 		}
-		
+		// default fallback
 		return displayName;
 	}
 
