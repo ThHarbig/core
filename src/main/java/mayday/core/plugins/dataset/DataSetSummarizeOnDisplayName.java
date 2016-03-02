@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import jdk.nashorn.internal.scripts.JO;
 import mayday.core.DataSet;
 import mayday.core.Probe;
 import mayday.core.math.average.IAverage;
@@ -19,6 +20,8 @@ import mayday.core.settings.typed.BooleanSetting;
 import mayday.core.settings.typed.StringSetting;
 import mayday.core.structures.maps.MultiHashMap;
 import mayday.core.tasks.AbstractTask;
+
+import javax.swing.*;
 
 public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements DatasetPlugin {
 
@@ -51,27 +54,41 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 			// cancel
 			return null;
 		}
+		// ask if user wants to split strings
+		int choise = JOptionPane.showConfirmDialog(null, "Would you like to split the Display Names?",
+				"String Splitting", JOptionPane.YES_NO_OPTION);
+		SummarizeC atask = null;
+		if (choise == JOptionPane.YES_OPTION) {
+			// Get additional settings
+			StringSetting regex; // split string
+			BooleanSetting exclusion; // exclude unmapped entries?
+			HierarchicalSetting additionalSettings = new HierarchicalSetting("Summary settings").
+					setLayoutStyle(HierarchicalSetting.LayoutStyle.PANEL_VERTICAL).
+					addSetting(regex = new StringSetting("Split regex",
+							"A regular expression that describes the sub-string that " +
+									"splits entries in your display name",
+							" /// ", false)).
+					addSetting(exclusion = new BooleanSetting("Exclude Unmapped",
+							"Would you like to exclude Probe entries that did not match a new display name?",
+							true));
+			sd = new SettingDialog(null, "Additional Settings", additionalSettings);
+			sd.showAsInputDialog();
+			if (sd.canceled()) {
+				return null;
+			}
 
-		// Get additional settings
-		StringSetting regex; // split string
-		BooleanSetting exclusion; // exclude unmapped entries?
-		HierarchicalSetting additionalSettings = new HierarchicalSetting("Summary settings").
-				setLayoutStyle(HierarchicalSetting.LayoutStyle.PANEL_VERTICAL).
-				addSetting(regex = new StringSetting("Split regex",
-						"A regular expression that describes the sub-string that " +
-								"splits entries in your display name",
-						" /// ", false)).
-				addSetting(exclusion = new BooleanSetting("Exclude Unmapped",
+			atask = new SummarizeC(datasets, as.getSummaryFunction(),
+					regex.getStringValue(), exclusion.getBooleanValue());
+		} else {
+			boolean ex = (JOptionPane.showConfirmDialog(null,
 						"Would you like to exclude Probe entries that did not match a new display name?",
-						true));
-		sd = new SettingDialog(null, "Additional Settings", additionalSettings);
-		sd.showAsInputDialog();
-		if(sd.canceled()) {
-			return null;
+						"Probe Exclusion", JOptionPane.YES_NO_OPTION)
+					== JOptionPane.YES_OPTION);
+			// without splitting
+			atask = new SummarizeC(datasets, as.getSummaryFunction(),
+					null, ex);
 		}
 		// Run Summarization
-		SummarizeC atask = new SummarizeC(datasets, as.getSummaryFunction(),
-				regex.getStringValue(), exclusion.getBooleanValue());
 		atask.start();
 		atask.waitFor();
 		return atask.getResult();
@@ -104,11 +121,18 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 				for (Probe pb : d1.getMasterTable().getProbes().values()) {
 					String fullName = pb.getDisplayName(exclusion);
 					if (fullName == null) {
+						// ignore this probe
 						continue;
 					}
-					String[] names = fullName.split(regex);
-					for (String n : names) {
-						byDisplayName.put(n, pb);
+					if (regex == null) {
+						// continue w/o splitting
+						byDisplayName.put(fullName, pb);
+					} else {
+						// continue with splitting
+						String[] names = fullName.split(regex);
+						for (String n : names) {
+							byDisplayName.put(n, pb);
+						}
 					}
 				}
 				
