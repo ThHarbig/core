@@ -100,8 +100,17 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 			for (DataSet d1 : datasets) {
 				
 				MultiHashMap<String,Probe> byDisplayName = new MultiHashMap<String, Probe>();
-				for (Probe pb : d1.getMasterTable().getProbes().values())
-					byDisplayName.put(pb.getDisplayName(), pb);
+				// map the split display names to the probe
+				for (Probe pb : d1.getMasterTable().getProbes().values()) {
+					String fullName = pb.getDisplayName(exclusion);
+					if (fullName == null) {
+						continue;
+					}
+					String[] names = fullName.split(regex);
+					for (String n : names) {
+						byDisplayName.put(n, pb);
+					}
+				}
 				
 				DataSet ds = new DataSet(d1.getName()+" - summarized ("+d1.getProbeDisplayNames().getName()+", "+summary+")");
 				resultsets.add(ds);			

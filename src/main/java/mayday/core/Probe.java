@@ -758,10 +758,18 @@ implements Comparable, Cloneable
 		}  	
   }*/
 
+	public String getDisplayName() {
+		return getDisplayName(false);
+	}
 
-	
-
-	public String getDisplayName()	{
+	/**
+	 * Return current display name of the probe. If the meta information group
+	 * contains no entry for this probe, then the result is
+	 * exclusion ? null : probeid + "*"
+	 * @param exclude
+	 * @return
+     */
+	public String getDisplayName(boolean exclude)	{
 		String displayName = this.getName();
 		
 		if (masterTable!=null) {
@@ -770,6 +778,9 @@ implements Comparable, Cloneable
 				MIType mt = mg.getMIO(this);
 				if (mt==null || mt.toString().trim().length()==0)
 					displayName+="*";
+					if (exclude) {
+						return null;
+					}
 				else
 					displayName=mt.toString();
 			}
