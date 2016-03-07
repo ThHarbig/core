@@ -55,7 +55,9 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 			return null;
 		}
 		// ask if user wants to split strings
-		int choise = JOptionPane.showConfirmDialog(null, "Would you like to split the Display Names?",
+		int choise = JOptionPane.showConfirmDialog(null,
+				"Some display names might suggest an ambiguous mapping.\n" +
+						"Would you like to split them?",
 				"String Splitting", JOptionPane.YES_NO_OPTION);
 		SummarizeC atask = null;
 		if (choise == JOptionPane.YES_OPTION) {
@@ -66,7 +68,8 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 					setLayoutStyle(HierarchicalSetting.LayoutStyle.PANEL_VERTICAL).
 					addSetting(regex = new StringSetting("Split regex",
 							"A regular expression that describes the sub-string that " +
-									"splits entries in your display name",
+									"splits entries in your display name.\n" +
+									"Don't use the '*' multiplier here",
 							" /// ", false)).
 					addSetting(exclusion = new BooleanSetting("Exclude Unmapped",
 							"Would you like to exclude Probe entries that did not match a new display name?",
@@ -77,6 +80,15 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 				return null;
 			}
 
+			if (regex.getStringValue().contains("*")) {
+				if (JOptionPane.showConfirmDialog(null,
+						"Your regex contains '*'. Rather use '+'!\n" +
+								"Do you still want to continue?",
+						"Possible Faulty regex", JOptionPane.YES_NO_OPTION)
+							== JOptionPane.NO_OPTION) {
+					return null;
+				}
+			}
 			atask = new SummarizeC(datasets, as.getSummaryFunction(),
 					regex.getStringValue(), exclusion.getBooleanValue());
 		} else {
