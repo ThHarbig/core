@@ -46,60 +46,36 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 	}
 
 	public List<DataSet> run(final List<DataSet> datasets) {
-		// get IAverage method
+		// setting for summarization method
 		AveragingSetting as = new AveragingSetting();
-		SettingDialog sd = new SettingDialog(null, "Select summarization method", as);
-		sd.showAsInputDialog();
+		// setting for excluding ambiguous mappings
+		BooleanSetting exclude = new BooleanSetting("Exclude Ambiguous Mappings?",
+				null, true);
+		// setting for splitting display names
+		BooleanSetting split = new BooleanSetting("Split display names?",
+				"", true);
+		StringSetting separator = new StringSetting("Separator",
+				"The string that separates entries with the display name",
+				" /// ", true);
+
+		// Pack all settings together
+		HierarchicalSetting allOptions =  new HierarchicalSetting("Summarization");
+		allOptions.addSetting(as)
+				.addSetting(exclude)
+				.addSetting(split)
+				.addSetting(separator);
+
+		// Display Settings
+		SettingDialog sd = new SettingDialog(null, "Select summarization method",
+				allOptions);
 		if (sd.canceled()) {
-			// cancel
 			return null;
 		}
-		// ask if user wants to split strings
-		int choise = JOptionPane.showConfirmDialog(null,
-				"Some display names might suggest an ambiguous mapping.\n" +
-						"Would you like to split them?",
-				"String Splitting", JOptionPane.YES_NO_OPTION);
-		SummarizeC atask = null;
-		if (choise == JOptionPane.YES_OPTION) {
-			// Get additional settings
-			StringSetting regex; // split string
-			BooleanSetting exclusion; // exclude unmapped entries?
-			HierarchicalSetting additionalSettings = new HierarchicalSetting("Summary settings").
-					setLayoutStyle(HierarchicalSetting.LayoutStyle.PANEL_VERTICAL).
-					addSetting(regex = new StringSetting("Split regex",
-							"A regular expression that describes the sub-string that " +
-									"splits entries in your display name.\n" +
-									"Don't use the '*' multiplier here",
-							" /// ", false)).
-					addSetting(exclusion = new BooleanSetting("Exclude Unmapped",
-							"Would you like to exclude Probe entries that did not match a new display name?",
-							true));
-			sd = new SettingDialog(null, "Additional Settings", additionalSettings);
-			sd.showAsInputDialog();
-			if (sd.canceled()) {
-				return null;
-			}
 
-			if (regex.getStringValue().contains("*")) {
-				if (JOptionPane.showConfirmDialog(null,
-						"Your regex contains '*'. Rather use '+'!\n" +
-								"Do you still want to continue?",
-						"Possible Faulty regex", JOptionPane.YES_NO_OPTION)
-							== JOptionPane.NO_OPTION) {
-					return null;
-				}
-			}
-			atask = new SummarizeC(datasets, as.getSummaryFunction(),
-					regex.getStringValue(), exclusion.getBooleanValue());
-		} else {
-			boolean ex = (JOptionPane.showConfirmDialog(null,
-						"Would you like to exclude Probe entries that did not match a new display name?",
-						"Probe Exclusion", JOptionPane.YES_NO_OPTION)
-					== JOptionPane.YES_OPTION);
-			// without splitting
-			atask = new SummarizeC(datasets, as.getSummaryFunction(),
-					null, ex);
-		}
+
+		SummarizeC atask = new SummarizeC(datasets, as.getSummaryFunction(),
+					split.getBooleanValue() ? separator.getStringValue() : null,
+					exclude.getBooleanValue());
 		// Run Summarization
 		atask.start();
 		atask.waitFor();
@@ -112,15 +88,15 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 		private List< DataSet > resultsets = new LinkedList<DataSet>();
 		private IAverage summary;
 
-		private String regex;
+		private String separator;
 		private boolean exclusion;
 		
 		public SummarizeC( List<DataSet> datasets2, IAverage summary,
-						   String regex, boolean exclusion) {
+						   String separator, boolean exclusion) {
 			super("Summarizing");
 			this.summary = summary;
 			this.datasets = datasets2;
-			this.regex = regex;
+			this.separator = separator;
 			this.exclusion = exclusion;
 		}
 
@@ -136,12 +112,12 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 						// ignore this probe
 						continue;
 					}
-					if (regex == null) {
+					if (separator == null) {
 						// continue w/o splitting
 						byDisplayName.put(fullName, pb);
 					} else {
 						// continue with splitting
-						String[] names = fullName.split(regex);
+						String[] names = fullName.split(separator);
 						for (String n : names) {
 							byDisplayName.put(n, pb);
 						}
