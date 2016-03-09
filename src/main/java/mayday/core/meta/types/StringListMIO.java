@@ -56,13 +56,34 @@ public class StringListMIO extends GenericMIO<List<String>> {
 	private String unprotect(String s) {
 		return s.replace("&komma;",",");
 	}
-	
+
+
+	/**
+	 * Fill value of this StringList with the ',' seperated entries of the
+	 * String serializedForm.
+	 * @param serializationType - SERIAL_TEXT or SERIAL_XML
+	 * @param serializedForm The serialized form
+     * @return
+     */
 	public boolean deSerialize(int serializationType, String serializedForm) {
+		return deSerialize(serializationType, serializedForm, ",");
+	}
+
+	/**
+	 * Fill value of this StringList with the entries of the
+	 * String serializedForm, which are seperated py the specified separator.
+	 * @param serializationType - SERIAL_TEXT or SERIAL_XML
+	 * @param serializedForm The serialized form
+	 * @param separator String
+	 * @return
+	 */
+	public boolean deSerialize(int serializationType, String serializedForm,
+			String separator) {
 		Value.clear();
 		switch(serializationType) {
 		case MIType.SERIAL_TEXT:
 			if (serializedForm.length()>0) {
-				String[] splits = serializedForm.split(",");
+				String[] splits = serializedForm.split(separator);
 				for (String s : splits)
 					Value.add(unprotect(s.trim()));
 			}
