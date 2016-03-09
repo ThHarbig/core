@@ -8,6 +8,7 @@ import jdk.nashorn.internal.scripts.JO;
 import mayday.core.DataSet;
 import mayday.core.Probe;
 import mayday.core.math.average.IAverage;
+import mayday.core.meta.types.StringListMIO;
 import mayday.core.pluma.AbstractPlugin;
 import mayday.core.pluma.Constants;
 import mayday.core.pluma.PluginInfo;
@@ -53,7 +54,7 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 				null, true);
 		// setting for splitting display names
 		BooleanSetting split = new BooleanSetting("Split display names?",
-				"", true);
+				null, true);
 		StringSetting separator = new StringSetting("Separator",
 				"The string that separates entries with the display name",
 				" /// ", true);
@@ -66,8 +67,9 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 				.addSetting(separator);
 
 		// Display Settings
-		SettingDialog sd = new SettingDialog(null, "Select summarization method",
+		SettingDialog sd = new SettingDialog(null, "Summarization",
 				allOptions);
+		sd.showAsInputDialog();
 		if (sd.canceled()) {
 			return null;
 		}
@@ -107,18 +109,19 @@ public class DataSetSummarizeOnDisplayName extends AbstractPlugin implements Dat
 				MultiHashMap<String,Probe> byDisplayName = new MultiHashMap<String, Probe>();
 				// map the split display names to the probe
 				for (Probe pb : d1.getMasterTable().getProbes().values()) {
-					String fullName = pb.getDisplayName(exclusion);
-					if (fullName == null) {
+					String displayName = pb.getDisplayName(exclusion);
+					if (displayName == null) {
 						// ignore this probe
 						continue;
 					}
 					if (separator == null) {
 						// continue w/o splitting
-						byDisplayName.put(fullName, pb);
+						byDisplayName.put(displayName, pb);
 					} else {
 						// continue with splitting
-						String[] names = fullName.split(separator);
-						for (String n : names) {
+						StringListMIO slm = new StringListMIO();
+						slm.deSerialize(StringListMIO.SERIAL_TEXT, displayName, separator);
+						for (String n : slm.getValue()) {
 							byDisplayName.put(n, pb);
 						}
 					}
