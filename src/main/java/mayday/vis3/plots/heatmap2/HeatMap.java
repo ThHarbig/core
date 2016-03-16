@@ -13,6 +13,8 @@ import mayday.vis3.plots.heatmap2.component.HeatmapOuterComponent;
 
 public class HeatMap extends PlotPlugin {
 
+	public static final String PluginID = "PAS.vis3.Heatmap4";
+
 	public void init() {
 	}
 
@@ -20,7 +22,7 @@ public class HeatMap extends PlotPlugin {
 	public PluginInfo register() throws PluginManagerException {
 		PluginInfo pli = new PluginInfo(
 				(Class)this.getClass(),
-				"PAS.vis3.Heatmap4",
+				PluginID,
 				new String[0],
 				MaydayDefaults.Plugins.CATEGORY_PLOT,
 				new HashMap<String, Object>(),
