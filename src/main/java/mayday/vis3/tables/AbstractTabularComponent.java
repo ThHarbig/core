@@ -3,15 +3,9 @@ package mayday.vis3.tables;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Method;
-import java.util.EventObject;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
-import javax.swing.DefaultCellEditor;
-import javax.swing.JLabel;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -189,23 +183,29 @@ public abstract class AbstractTabularComponent extends JTable implements ListSel
 	public boolean goToProbe( String probeIdentifier )
 	{  
 		DefaultTableModel model = (DefaultTableModel)getModel();
-		int row;
-		for (row = 0; row!=model.getRowCount(); ++row) {
+
+		Set<Probe> findings = new HashSet<>();
+
+		for (int row = 0; row!=model.getRowCount(); ++row) {
 			Object opb = model.getValueAt(row, PROBECOL);
 			if (opb instanceof Probe && (
-				((Probe)opb).getName().equals(probeIdentifier)) || ((Probe)opb).getDisplayName().equals(probeIdentifier)
-				)
-				break;
+					((Probe)opb).getName().contains(probeIdentifier))
+						|| ((Probe)opb).getDisplayName().contains(probeIdentifier)
+					)
+				// hit
+				findings.add(probes.get(row));
+				// scroll to find
+				scrollRectToVisible(this.getCellRect(row, 0, true));
 		}
-		
-		if (row<model.getRowCount()) {			
-//			if (row+5<model.getRowCount())
-//				row+=5;
-			scrollRectToVisible(this.getCellRect(row, 0, true));
+
+		if (findings.size() > 0) {
+			JOptionPane.showMessageDialog(null, "Found " + findings.size() +
+					" entries that matched your search.");
+			visualizer.getViewModel().setProbeSelection(findings);
 			return true;
+		} else {
+			return false;
 		}
-		
-		return false;
 	}
 
 
