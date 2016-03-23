@@ -15,8 +15,7 @@ import mayday.core.math.stattest.StatTestResult;
 import mayday.core.meta.types.DoubleMIO;
 import mayday.core.tasks.AbstractTask;
 
-import org.apache.commons.math.MathException;
-import org.apache.commons.math.distribution.NormalDistributionImpl;
+import org.apache.commons.math3.distribution.NormalDistribution;
 
 /**
  * @author G\u00FCnter J\u00E4ger
@@ -260,7 +259,7 @@ public class PermutationTest {
 			}
 		}
 		//Calculate the significance of the original value
-		NormalDistributionImpl ndi = new NormalDistributionImpl();
+		NormalDistribution ndi = new NormalDistribution();
 		
 		for(Object o:objects){
 			ArrayList<Double> values = permDifferences.get(o);
@@ -280,11 +279,7 @@ public class PermutationTest {
 			double pVal = Double.NaN;
 			originalDif = (originalDif - average)/stDeviation;
 			
-			try{
-				pVal = ndi.cumulativeProbability(originalDif);
-			}catch(MathException me){
-				System.out.println(((Probe)o).getName() + ": does not converge -> Can't compute p-value.");
-			}
+			pVal = ndi.cumulativeProbability(originalDif);
 			
 			if(pVal >= 0.5 && pVal != Double.NaN){
 				pVal = 1 - pVal;	

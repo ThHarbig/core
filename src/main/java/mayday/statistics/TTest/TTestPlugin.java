@@ -16,8 +16,7 @@ import mayday.core.settings.Setting;
 import mayday.core.structures.linalg.Algebra;
 import mayday.core.structures.linalg.matrix.PermutableMatrix;
 import mayday.core.structures.linalg.vector.AbstractVector;
-
-import org.apache.commons.math.MathException;
+import org.apache.commons.math3.stat.inference.TTest;
 
 public class TTestPlugin extends StatTestPlugin {
 
@@ -41,7 +40,7 @@ public class TTestPlugin extends StatTestPlugin {
 
 		UncorrectedStatTestResult res = new UncorrectedStatTestResult();
 		
-		org.apache.commons.math.stat.inference.TTest tTest= org.apache.commons.math.stat.inference.TestUtils.getTTest();
+		TTest tTest= new TTest();
 		
 		// transform the data into a form that is much easier to work with for RP
 		Map<Object, Integer> indexMap = new TreeMap<Object, Integer>();		
@@ -63,7 +62,7 @@ public class TTestPlugin extends StatTestPlugin {
 			try {
 				tvals[i] = computeT(tTest, v1.toArray(), v2.toArray(), paired, equalvar);
 				pvals[i] = computeP(tTest, v1.toArray(), v2.toArray(), paired, equalvar);
-			} catch (MathException e) {
+			} catch (Exception e) {
 				tvals[i] = Double.NaN;
 				pvals[i] = Double.NaN;
 			}
@@ -99,8 +98,8 @@ public class TTestPlugin extends StatTestPlugin {
 	}
 
 	
-	private double computeT(org.apache.commons.math.stat.inference.TTest tTest, double [] sample1, double [] sample2, boolean paired, boolean equalvar) 
-	throws org.apache.commons.math.MathException{
+	private double computeT(TTest tTest, double [] sample1, double [] sample2, boolean paired, boolean equalvar)
+	throws Exception{
 		double tStat = 0.0d;
 		if (paired) { // paired t-test
 			tStat = tTest.pairedT(sample1,sample2);
@@ -113,8 +112,8 @@ public class TTestPlugin extends StatTestPlugin {
 	}
 
 	// compute p-value
-	private double computeP(org.apache.commons.math.stat.inference.TTest tTest, double [] sample1, double [] sample2, boolean paired, boolean equalvar)
-	throws org.apache.commons.math.MathException {
+	private double computeP(TTest tTest, double [] sample1, double [] sample2, boolean paired, boolean equalvar)
+	throws Exception {
 		double pVal = 2.0d;
 		if (paired) { // paired t-test
 			pVal = tTest.pairedTTest(sample1,sample2);

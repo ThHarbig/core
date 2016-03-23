@@ -14,6 +14,7 @@ import mayday.mpf.options.OptDouble;
 import mayday.mpf.options.OptDropDown;
 import mayday.mpf.options.OptPagedDropDown;
 import mayday.mpf.options.OptString;
+import org.apache.commons.math3.stat.inference.TTest;
 
 public class mpfTTest extends FilterBase{
 
@@ -105,7 +106,7 @@ public class mpfTTest extends FilterBase{
 
 
 
-		org.apache.commons.math.stat.inference.TTest tTest= org.apache.commons.math.stat.inference.TestUtils.getTTest();
+		TTest tTest= new TTest();
 
 
 		double [] sampleOne = null; 
@@ -152,17 +153,13 @@ public class mpfTTest extends FilterBase{
 			try { // compute t-statistic
 				entry[0] = getTStatistics(tTest, sampleOne, sampleTwo);
 
-			} catch (org.apache.commons.math.MathException e1) {
-				e1.printStackTrace();
-			} catch (RuntimeException e1) {
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 
 			try { // get p-value
 				entry[1] = getPValueTTest(tTest, sampleOne, sampleTwo, entry[0]);
-			} catch (org.apache.commons.math.MathException e) {
-				e.printStackTrace();
-			} catch (RuntimeException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
@@ -238,8 +235,8 @@ public class mpfTTest extends FilterBase{
 
 
 	// compute t-statistic
-	private double getTStatistics(org.apache.commons.math.stat.inference.TTest tTest, double [] sample1, double [] sample2) 
-	throws org.apache.commons.math.MathException{
+	private double getTStatistics(TTest tTest, double [] sample1, double [] sample2)
+	throws Exception{
 		double tStat = 0.0d;
 		if (samplesize.Value==0) { // one-sample t-test
 			tStat = tTest.t(mu.Value, sample1);
@@ -256,8 +253,8 @@ public class mpfTTest extends FilterBase{
 	}
 
 	// compute p-value
-	private double getPValueTTest(org.apache.commons.math.stat.inference.TTest tTest, double [] sample1, double [] sample2, double tStatistics)
-	throws org.apache.commons.math.MathException {
+	private double getPValueTTest(TTest tTest, double [] sample1, double [] sample2, double tStatistics)
+	throws Exception {
 		double pVal = 2.0d;
 		if (samplesize.Value==0) { // one-sample t-test
 			pVal = tTest.tTest(mu.Value, sample1);

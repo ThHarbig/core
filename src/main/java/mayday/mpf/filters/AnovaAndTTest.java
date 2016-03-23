@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mayday.core.Probe;
+import mayday.core.math.Binomial;
 import mayday.core.meta.MIGroup;
 import mayday.core.meta.MIManager;
 import mayday.core.meta.types.DoubleMIO;
@@ -12,6 +13,11 @@ import mayday.mpf.options.OptBoolean;
 import mayday.mpf.options.OptClasses;
 import mayday.mpf.options.OptDropDown;
 import mayday.mpf.options.OptString;
+import org.apache.commons.math3.distribution.BinomialDistribution;
+import org.apache.commons.math3.distribution.FDistribution;
+import org.apache.commons.math3.stat.StatUtils;
+import org.apache.commons.math3.stat.inference.TTest;
+import org.apache.commons.math3.util.ArithmeticUtils;
 
 
 public class AnovaAndTTest extends FilterBase {
@@ -57,7 +63,7 @@ public class AnovaAndTTest extends FilterBase {
 		
 		Anova a = new Anova();
 		
-		org.apache.commons.math.stat.inference.TTest tTest= org.apache.commons.math.stat.inference.TestUtils.getTTest();
+		TTest tTest= new TTest();
 
 		MIManager mim = OutputData[0].getProbeList().getDataSet().getMIManager();
 		
@@ -97,10 +103,10 @@ public class AnovaAndTTest extends FilterBase {
 			if (classSelection.get(i).size()<2)
 				throw new Exception("You need at least 2 experiments per group to do ANOVA.");
 			indexes[i] =  classSelection.get(i).toArray(new Integer[0]);
-		}		
-		
-		int numberOfTtests = (int) org.apache.commons.math.util.MathUtils.binomialCoefficient(numberOfGroups,2);
-		
+		}
+
+		int numberOfTtests = (int) ArithmeticUtils.binomialCoefficient(numberOfGroups,2);
+
 		//create MIO Group for each post hoc t-test
 		for (int i=0;i < numberOfTtests; ++i){
 			MIGroup mioG = null;
@@ -139,8 +145,8 @@ public class AnovaAndTTest extends FilterBase {
 		ProgressMeter.initializeStepper(InputData[0].size());
 		
 		// create f-distribution 
-		org.apache.commons.math.distribution.FDistributionImpl fDist = 
-			new org.apache.commons.math.distribution.FDistributionImpl(classSelection.size()-1, n-classSelection.size());
+		FDistribution fDist =
+			new FDistribution(classSelection.size()-1, n-classSelection.size());
 			//(Groups.Value+3-1),(n-(Groups.Value+3)));
 		
 		for (Probe pb : OutputData[0]) {
@@ -185,12 +191,12 @@ public class AnovaAndTTest extends FilterBase {
 				}
 				
 				// ANOVA
-				means[i][0] = org.apache.commons.math.stat.StatUtils.mean(values[i]);
+				means[i][0] = StatUtils.mean(values[i]);
 				for(int h=0; h<values[i].length; ++h){
 					sqwg= sqwg + Math.pow((values[i][h]-means[i][0]),2);
 				}
 				means[i][1] = values[i].length;
-				sum = sum + org.apache.commons.math.stat.StatUtils.sum(values[i]);
+				sum = sum + StatUtils.sum(values[i]);
 			}
 			
 			mean = (sum / n);
@@ -213,8 +219,8 @@ public class AnovaAndTTest extends FilterBase {
 	}
 
 
-	private double getTStatistics(org.apache.commons.math.stat.inference.TTest tTest, double [] sample1, double [] sample2)
-	throws org.apache.commons.math.MathException{
+	private double getTStatistics(TTest tTest, double [] sample1, double [] sample2)
+	throws Exception{
 		double tStat = 0.0d;
 		if (variances.Value==0) { // equal variances
 			tStat = tTest.homoscedasticT(sample1, sample2);
@@ -226,8 +232,8 @@ public class AnovaAndTTest extends FilterBase {
 	}
 
 
-	private double getPValueTTest(org.apache.commons.math.stat.inference.TTest tTest, double [] sample1, double [] sample2/*, double tStatistics*/)
-	throws org.apache.commons.math.MathException {
+	private double getPValueTTest(TTest tTest, double [] sample1, double [] sample2/*, double tStatistics*/)
+	throws Exception {
 		double pVal = 2.0d;
 		if (variances.Value==0) { // equal variances
 			pVal = tTest.homoscedasticTTest(sample1, sample2);

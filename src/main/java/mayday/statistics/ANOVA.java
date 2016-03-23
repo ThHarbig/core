@@ -38,7 +38,7 @@ import mayday.core.settings.typed.ClassSelectionSetting;
 import mayday.core.settings.typed.DoubleSetting;
 import mayday.core.settings.typed.StringSetting;
 
-import org.apache.commons.math.MathException;
+import org.apache.commons.math3.distribution.FDistribution;
 
 /**
  * @author gehlenbo
@@ -172,8 +172,8 @@ implements ProbelistPlugin
 		
 		
 		// create f-distribution
-		org.apache.commons.math.distribution.FDistributionImpl fDist = 
-			new org.apache.commons.math.distribution.FDistributionImpl(classSelection.size()-1, n-classSelection.size());
+		FDistribution fDist =
+			new FDistribution(classSelection.size()-1, n-classSelection.size());
 					//(Groups.Value+3-1),(n-(Groups.Value+3)));
 		
 		for (Probe pb : probes.toCollection()) {
@@ -190,7 +190,7 @@ implements ProbelistPlugin
 			double p = 0.0; // p-value
 			for(int i=0; i< values.length; ++i){
 			
-				means[i][0] = org.apache.commons.math.stat.StatUtils.mean(values[i]); // get group mean value 
+				means[i][0] = org.apache.commons.math3.stat.StatUtils.mean(values[i]); // get group mean value
 				
 				for(int h=0; h<values[i].length; ++h){
 					sqwg= sqwg + Math.pow((values[i][h]-means[i][0]),2);
@@ -198,7 +198,7 @@ implements ProbelistPlugin
 				}
 							
 				means[i][1] = values[i].length;
-				sum = sum + org.apache.commons.math.stat.StatUtils.sum(values[i]); // summarize all values to compute mean value
+				sum = sum + org.apache.commons.math3.stat.StatUtils.sum(values[i]); // summarize all values to compute mean value
 			}
 			mean = (sum / n);
 			
@@ -207,11 +207,9 @@ implements ProbelistPlugin
 			vwg = (sqwg)/(n-(classSelection.size()));  //vwg = (sqwg)/(n-(Groups.Value+3));
 			vbg = sqbg/(classSelection.size()-1);      //vbg = sqbg/(Groups.Value+3-1)
 			fRatio= vbg/vwg;
-			try {
-				p = 1.0-fDist.cumulativeProbability(fRatio); // one sided-greater t-test
-			} catch (MathException e) {
-				p= Double.NaN;
-			} 
+
+			p = 1.0-fDist.cumulativeProbability(fRatio); // one sided-greater t-test
+
 			
 			// write p (and f-) values into MIOs
 			// create new MIO for p-value MIO Group

@@ -13,6 +13,8 @@ import mayday.mpf.FilterBase;
 import mayday.mpf.options.OptBoolean;
 import mayday.mpf.options.OptClasses;
 import mayday.mpf.options.OptString;
+import org.apache.commons.math3.distribution.FDistribution;
+import org.apache.commons.math3.stat.StatUtils;
 
 public class Anova extends FilterBase{
 	
@@ -129,8 +131,8 @@ public class Anova extends FilterBase{
 		
 		ProgressMeter.initializeStepper(InputData[0].size());
 		// create f-distribution
-		org.apache.commons.math.distribution.FDistributionImpl fDist = 
-			new org.apache.commons.math.distribution.FDistributionImpl(classSelection.size()-1, n-classSelection.size());
+		FDistribution fDist =
+			new FDistribution(classSelection.size()-1, n-classSelection.size());
 					//(Groups.Value+3-1),(n-(Groups.Value+3)));
 		
 		for (Probe pb : OutputData[0]) {
@@ -147,7 +149,7 @@ public class Anova extends FilterBase{
 			double p = 0.0; // p-value
 			for(int i=0; i< values.length; ++i){
 			
-				means[i][0] = org.apache.commons.math.stat.StatUtils.mean(values[i]); // get group mean value 
+				means[i][0] = StatUtils.mean(values[i]); // get group mean value
 				
 				for(int h=0; h<values[i].length; ++h){
 					sqwg= sqwg + Math.pow((values[i][h]-means[i][0]),2);
@@ -156,7 +158,7 @@ public class Anova extends FilterBase{
 							
 				
 				means[i][1] = values[i].length;
-				sum = sum + org.apache.commons.math.stat.StatUtils.sum(values[i]); // summarize all values to compute mean value
+				sum = sum + StatUtils.sum(values[i]); // summarize all values to compute mean value
 			}
 			mean = (sum / n);
 			

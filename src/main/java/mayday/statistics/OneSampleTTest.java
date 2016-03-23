@@ -38,8 +38,8 @@ import mayday.core.structures.linalg.Algebra;
 import mayday.core.structures.linalg.matrix.PermutableMatrix;
 import mayday.core.structures.linalg.vector.AbstractVector;
 import mayday.statistics.TTest.TTestPlugin;
-
-import org.apache.commons.math.MathException;
+import org.apache.commons.math3.stat.inference.TTest;
+import org.apache.commons.math3.stat.inference.TestUtils;
 
 /**
  * @author gehlenbo
@@ -142,7 +142,7 @@ implements ProbelistPlugin
 
 		UncorrectedStatTestResult res = new UncorrectedStatTestResult();
 		
-		org.apache.commons.math.stat.inference.TTest tTest= org.apache.commons.math.stat.inference.TestUtils.getTTest();
+		TTest tTest= new TTest();
 		
 		// transform the data into a form that is much easier to work with for RP
 		Map<Object, Integer> indexMap = new TreeMap<Object, Integer>();		
@@ -157,7 +157,7 @@ implements ProbelistPlugin
 			try {
 				tvals[i] = tTest.t(mu, v1.toArrayUnpermuted());
 				pvals[i] = tTest.tTest(mu, v1.toArrayUnpermuted());
-			} catch (MathException e) {
+			} catch (Exception e) {
 				tvals[i] = Double.NaN;
 				pvals[i] = Double.NaN;
 			}
