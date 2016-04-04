@@ -30,6 +30,7 @@ public class BooleanSetting extends GenericSetting {
 	
 	public void setBooleanValue(Boolean nv) {
 		setValueString(nv.toString());
+		fireChanged();
 	}
 	
 	@SuppressWarnings("unchecked")
