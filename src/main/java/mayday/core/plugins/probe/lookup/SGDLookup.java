@@ -7,7 +7,7 @@ public class SGDLookup extends GenericLookupPlugin
 	public SGDLookup() 
 	{
 		this.name="SGD";
-		this.urlPrefix="http://db.yeastgenome.org/cgi-bin/SGD/singlepageformat?locus=";
+		this.urlPrefix="http://www.yeastgenome.org/cgi-bin/search/luceneQS.fpl?query=";
 		this.urlSuffix="";
 		this.multipleProbesPerRequest=false;
 		idSeperator="";
