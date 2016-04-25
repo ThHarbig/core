@@ -43,9 +43,9 @@ public final class MaydayDefaults
 	
 	  // program information  
     public static final String PROGRAM_NAME = "Mayday"; 
-    public static final String PROGRAM_DESCRIPTION = "A microarray data analysis workbench."; 
+    public static final String PROGRAM_DESCRIPTION = "An expression data analysis workbench.";
     public static final int RELEASE_MAJOR = 2; 
-    public static final int RELEASE_MINOR = 14; 
+    public static final int RELEASE_MINOR = 30;
     public static final String RELEASE_SUPPLEMENT = "";
     public static final String PROGRAM_FULL_NAME = PROGRAM_NAME +
     " " +
